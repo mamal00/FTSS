@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FTSS.Logic.Security
 {
@@ -37,9 +38,9 @@ namespace FTSS.Logic.Security
         /// </summary>
         /// <param name="filterParams"></param>
         /// <returns></returns>
-        private DBResult Login(Models.Database.StoredProcedures.SP_Login_Params filterParams)
+        private async Task<DBResult> Login(Models.Database.StoredProcedures.SP_Login_Params filterParams)
         {
-            var LoginResult = Logic.Database.StoredProcedure.SP_Login.Call(_ctx, filterParams);
+            var LoginResult =await Logic.Database.StoredProcedure.SP_Login.Call(_ctx, filterParams);
             if (LoginResult.ErrorCode != 200)
                 return LoginResult;
 
@@ -48,7 +49,7 @@ namespace FTSS.Logic.Security
             this.Username = filterParams.Email;
 
             //Get user access menu
-            var AccessMenuResult = Logic.Database.StoredProcedure.SP_User_GetAccessMenu.Call(_ctx, this.User);
+            var AccessMenuResult =await Logic.Database.StoredProcedure.SP_User_GetAccessMenu.Call(_ctx, this.User);
             if (AccessMenuResult.ErrorCode != 200)
                 return AccessMenuResult;
 
@@ -66,11 +67,11 @@ namespace FTSS.Logic.Security
         /// <param name="ctx"></param>
         /// <param name="filterParams"></param>
         /// <returns></returns>
-        public static DBResult Login(Logic.Database.IDBCTX ctx, Models.Database.StoredProcedures.SP_Login_Params filterParams)
+        public static async Task<DBResult> Login(Logic.Database.IDBCTX ctx, Models.Database.StoredProcedures.SP_Login_Params filterParams)
         {
             //Validation Username & Password by database stored procedure
             var userInfo = new UserInfo(ctx);
-            var loginResult = userInfo.Login(filterParams);
+            var loginResult =await userInfo.Login(filterParams);
 
             //If login failed, exit
             if (loginResult.ErrorCode != 200)

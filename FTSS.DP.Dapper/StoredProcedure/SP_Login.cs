@@ -4,6 +4,7 @@ using System;
 using Microsoft.Data.SqlClient;
 using System.Linq;
 using FTSS.Models.Database;
+using System.Threading.Tasks;
 
 namespace FTSS.DP.DapperORM.StoredProcedure
 {
@@ -16,27 +17,29 @@ namespace FTSS.DP.DapperORM.StoredProcedure
             _cns = cns;
         }
 
-        public DBResult Call(Models.Database.StoredProcedures.SP_Login_Params filterParams)
+        public async Task<DBResult> Call(Models.Database.StoredProcedures.SP_Login_Params filterParams)
         {
-            if (filterParams == null)
-                throw new Exception("SP_Login.Call can not be call without passing username and password");
+			try
+			{
+                string sql = "dbo.SP_Login";
+                DBResult rst = null;
 
-            string sql = "dbo.SP_Login";
-            DBResult rst = null;
+                using (var connection = new SqlConnection(_cns))
+                {
+                    var p = Common.GetSearchParams();
+                    p.AddDynamicParams(Common.GenerateParams(filterParams, null));
+                    var dbResult = await connection.QueryFirstOrDefaultAsync<Models.Database.StoredProcedures.SP_Login>(
+                        sql, p, commandType: System.Data.CommandType.StoredProcedure);
 
-            using (var connection = new SqlConnection(_cns))
-            {
-                var p = Common.GetSearchParams();
-                p.Add("@Email", filterParams.Email);
-                p.Add("@Password", filterParams.Password);
+                    rst = Common.GetResult(p, dbResult);
+                }
 
-                var dbResult = connection.Query<Models.Database.StoredProcedures.SP_Login>(
-                    sql, p, commandType: System.Data.CommandType.StoredProcedure).FirstOrDefault();
-
-                rst = Common.GetResult(p, dbResult);                
+                return rst;
             }
-
-            return rst;
+            catch(Exception ex)
+			{
+                throw new Exception(ex.Message);
+			}
         }
     }
 }

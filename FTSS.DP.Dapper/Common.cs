@@ -1,6 +1,8 @@
 ﻿using Dapper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace FTSS.DP.DapperORM
@@ -76,6 +78,45 @@ namespace FTSS.DP.DapperORM
             }
 
             return rst;
+        }
+
+        public static DynamicParameters GenerateParams(object data, List<string> exceptFields = null)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+        
+            if (data != null)
+            {
+                    foreach (PropertyInfo propertyInfo in data.GetType().GetProperties().ToList())
+                    {
+                        bool finded = false;
+                        if (exceptFields != null && exceptFields.Count > 0)
+                        {
+                            foreach (var item in exceptFields)
+                            {
+                                if (item == propertyInfo.Name)
+                                {
+                                    finded = true;
+                                    break;
+                                }
+
+                            }
+                            if (finded == false)
+                            {
+                                parameters.Add("@" + propertyInfo.Name, propertyInfo.GetValue(data) ?? DBNull.Value);
+                            }
+                        }
+                        else
+                        {
+                            parameters.Add("@" + propertyInfo.Name, propertyInfo.GetValue(data) ?? DBNull.Value);
+                        }
+                    }
+                
+
+            }
+    
+            return parameters;
+
+
         }
 
     }

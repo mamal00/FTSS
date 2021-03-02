@@ -4,6 +4,7 @@ using System;
 using Microsoft.Data.SqlClient;
 using System.Linq;
 using FTSS.Models.Database;
+using System.Threading.Tasks;
 
 namespace FTSS.DP.DapperORM.StoredProcedure
 {
@@ -21,7 +22,7 @@ namespace FTSS.DP.DapperORM.StoredProcedure
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        public DBResult Call(string msg)
+        public async Task<DBResult> Call(string msg)
         {
             if (string.IsNullOrEmpty(msg))
                 throw new Exception("SP_Log_Insert.Call need a text message as parameter");
@@ -32,7 +33,7 @@ namespace FTSS.DP.DapperORM.StoredProcedure
 
             using (var connection = new SqlConnection(_cns))
             {
-                connection.Execute(sql,
+               await connection.ExecuteAsync(sql,
                     new 
                     {                        
                         IPAddress,

@@ -4,6 +4,7 @@ using System;
 using Microsoft.Data.SqlClient;
 using System.Linq;
 using FTSS.Models.Database;
+using System.Threading.Tasks;
 
 namespace FTSS.DP.DapperORM.StoredProcedure
 {
@@ -16,7 +17,7 @@ namespace FTSS.DP.DapperORM.StoredProcedure
             _cns = cns;
         }
 
-        public DBResult Call(Models.Database.StoredProcedures.SP_Login Data)
+        public async Task<DBResult> Call(Models.Database.StoredProcedures.SP_Login Data)
         {
             if (Data == null || string.IsNullOrEmpty(Data.Token))
                 throw new Exception("SP_User_GetAccessMenu.Call can not be call without passing userInfo");
@@ -28,7 +29,7 @@ namespace FTSS.DP.DapperORM.StoredProcedure
             {
                 var p = Common.GetSearchParams(Data.Token);
 
-                var dbResult = connection.Query<Models.Database.StoredProcedures.SP_User_GetAccessMenu>(
+                var dbResult =await connection.QueryAsync<Models.Database.StoredProcedures.SP_User_GetAccessMenu>(
                     sql, p, commandType: System.Data.CommandType.StoredProcedure);
 
                 rst = Common.GetResult(p, dbResult);

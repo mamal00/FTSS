@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FTSS.Logic.Database.StoredProcedure
 {
@@ -12,12 +13,12 @@ namespace FTSS.Logic.Database.StoredProcedure
         /// <param name="ctx"></param>
         /// <param name="filterParams"></param>
         /// <returns></returns>
-        public static Models.Database.DBResult Call(IDBCTX ctx,
+        public static async Task<Models.Database.DBResult> Call(IDBCTX ctx,
             Models.Database.StoredProcedures.SP_Login_Params filterParams)
         {
             var connectionString = ctx.GetConnectionString();
             var sp = new FTSS.DP.DapperORM.StoredProcedure.SP_Login(connectionString);
-            var rst = sp.Call(filterParams);
+            var rst =await sp.Call(filterParams);
             return rst;
         }
     }

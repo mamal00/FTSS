@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FTSS.DP.DapperORM.StoredProcedure
 {
@@ -17,7 +18,7 @@ namespace FTSS.DP.DapperORM.StoredProcedure
             _cns = cns;
         }
 
-        public DBResult Call(Models.Database.StoredProcedures.SP_Users_GetAll_Params filterParams)
+        public async Task<DBResult> Call(Models.Database.StoredProcedures.SP_Users_GetAll_Params filterParams)
         {
             if (filterParams == null)
                 throw new Exception("SP_Users_GetAll.Call can not be call without passing filterParams");
@@ -33,7 +34,7 @@ namespace FTSS.DP.DapperORM.StoredProcedure
                 p.Add("@FirstName", filterParams.FirstName);
                 p.Add("@LastName", filterParams.LastName);                                
 
-                var dbResult = connection.Query<Models.Database.StoredProcedures.SP_Users_GetAll>(
+                var dbResult =await connection.QueryAsync<Models.Database.StoredProcedures.SP_Users_GetAll>(
                     sql, p, commandType: System.Data.CommandType.StoredProcedure);
 
                 rst = Common.GetResult(p, dbResult);
