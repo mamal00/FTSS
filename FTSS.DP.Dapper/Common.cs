@@ -35,6 +35,7 @@ namespace FTSS.DP.DapperORM
             //Pagination
             p.Add("@StartIndex", filterParams.StartIndex, System.Data.DbType.Int32);
             p.Add("@PageSize", filterParams.PageSize, System.Data.DbType.Int32);
+            p.Add("@Sort", filterParams.Sort, System.Data.DbType.String);
 
             int actualSize = 0;
             p.Add("@ActualSize", actualSize, System.Data.DbType.Int32, System.Data.ParameterDirection.Output);
@@ -102,12 +103,12 @@ namespace FTSS.DP.DapperORM
                             }
                             if (finded == false)
                             {
-                                parameters.Add("@" + propertyInfo.Name, propertyInfo.GetValue(data) ?? DBNull.Value);
+                                parameters.Add("@" + propertyInfo.Name, IsDateTime(propertyInfo.GetValue(data)) ? propertyInfo.GetValue(data): SafeFarsiStr(propertyInfo.GetValue(data)) ?? DBNull.Value);
                             }
                         }
                         else
                         {
-                            parameters.Add("@" + propertyInfo.Name, propertyInfo.GetValue(data) ?? DBNull.Value);
+                            parameters.Add("@" + propertyInfo.Name, IsDateTime(propertyInfo.GetValue(data)) ? propertyInfo.GetValue(data) : SafeFarsiStr(propertyInfo.GetValue(data)) ?? DBNull.Value);
                         }
                     }
                 
@@ -118,6 +119,24 @@ namespace FTSS.DP.DapperORM
 
 
         }
-
+        private static object SafeFarsiStr(object input)
+        {
+            if (input == null)
+                return null;
+            var text = input.ToString();
+            if (!string.IsNullOrEmpty(text))
+            {
+                return (object)text.Replace("ﮎ", "ک").Replace("ﮏ", "ک").Replace("ﮐ", "ک").Replace("ﮑ", "ک").Replace("ك", "ک").Replace("ي", "ی").Replace("ی", "ی").Replace("اِ", "ا").Replace("اُ", "ا").Replace("اَ", "ا").Replace("اً", "ا").Replace("اٌ", "ا").Replace("اٍ", "ا").Replace("اّ", "ا");
+            }
+            return null;
+        }
+        private static bool IsDateTime(object txtDate)
+        {
+            DateTime tempDate;
+            string date = null;
+            if (txtDate != null)
+                date = txtDate.ToString();
+            return DateTime.TryParse(date, out tempDate);
+        }
     }
 }

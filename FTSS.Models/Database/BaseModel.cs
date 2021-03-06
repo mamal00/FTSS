@@ -6,6 +6,10 @@ namespace FTSS.Models.Database
 {
     public class BaseModel
     {
+		public BaseModel()
+		{
+
+		}
         public string Token { get; set; }
     }
 }

@@ -36,6 +36,26 @@ namespace FTSS.API.Controllers
                 return Problem(e.Message, e.StackTrace, 500, "Error in GetAll");
             }
         }
+        /// <summary>
+        /// Get User With UserId
+        /// </summary>
+        /// <param name="filterParams"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Filters.Auth]
+        public async Task<IActionResult> Get([FromBody] Models.Database.StoredProcedures.SP_Users_Get_Params filterParams)
+        {
+            try
+            {
+                var dbResult = await Logic.Database.StoredProcedure.SP_Users_Get.Call(_ctx, filterParams);
+                return FromDatabase(dbResult);
+            }
+            catch (Exception e)
+            {
+                _logger.Add(e, "Error in UsersController.Get(filterParams)");
+                return Problem(e.Message, e.StackTrace, 500, "Error in Get");
+            }
+        }
 
         /// <summary>
         /// Add new user to database
@@ -75,6 +95,25 @@ namespace FTSS.API.Controllers
             {
                 _logger.Add(e, "Error in UsersController.Login(filterParams)");
                 return Problem(e.Message, e.StackTrace, 500, "Error in Login");
+            }
+        }
+        /// <summary>
+        /// Delete User With Id
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] Models.Database.BaseIdModel data)
+        {
+            try
+            {
+                var rst = await Logic.Database.StoredProcedure.SP_User_Delete.Call(_ctx, data);
+                return FromDatabase(rst);
+            }
+            catch (Exception e)
+            {
+                _logger.Add(e, "Error in UsersController.Delete(data)");
+                return Problem(e.Message, e.StackTrace, 500, "Error in Delete");
             }
         }
 

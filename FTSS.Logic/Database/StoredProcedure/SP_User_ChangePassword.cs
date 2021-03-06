@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace FTSS.Logic.Database.StoredProcedure
 {
-    public class SP_User_Insert
-    {
+	public class SP_User_ChangePassword
+	{
         public static async Task<Models.Database.DBResult> Call(IDBCTX ctx,
-            Models.Database.Tables.Users data)
+     Models.Database.StoredProcedures.SP_User_ChangePassword_Params data)
         {
             var connectionString = ctx.GetConnectionString();
-            var sp = new FTSS.DP.DapperORM.StoredProcedure.SP_User_Insert(connectionString);
+            var sp = new FTSS.DP.DapperORM.StoredProcedure.SP_User_ChangePassword(connectionString);
             data.Token = JWT.GetUserModel().User.Token;
-            var rst =await sp.Call(data);
+            var rst = await sp.Call(data);
             return rst;
         }
     }

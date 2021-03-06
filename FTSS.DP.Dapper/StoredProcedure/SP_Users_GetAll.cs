@@ -20,26 +20,18 @@ namespace FTSS.DP.DapperORM.StoredProcedure
 
         public async Task<DBResult> Call(Models.Database.StoredProcedures.SP_Users_GetAll_Params filterParams)
         {
-            if (filterParams == null)
-                throw new Exception("SP_Users_GetAll.Call can not be call without passing filterParams");
-
+     
             string sql = "dbo.SP_Users_GetAll";
             DBResult rst = null;
 
             using (var connection = new SqlConnection(_cns))
             {
                 var p = Common.GetSearchParams(filterParams);
-                
-                p.Add("@Email", filterParams.Email);
-                p.Add("@FirstName", filterParams.FirstName);
-                p.Add("@LastName", filterParams.LastName);                                
-
+                p.AddDynamicParams(Common.GenerateParams(filterParams,new List<string> { "Token", "PageSize", "StartIndex","Sort" }));
                 var dbResult =await connection.QueryAsync<Models.Database.StoredProcedures.SP_Users_GetAll>(
                     sql, p, commandType: System.Data.CommandType.StoredProcedure);
-
                 rst = Common.GetResult(p, dbResult);
             }
-
             return rst;
         }
     }

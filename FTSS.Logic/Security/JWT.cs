@@ -1,4 +1,5 @@
 ﻿using FTSS.Models.Database;
+using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,48 @@ namespace FTSS.Logic.Security
             }
         }
 
+        public static Logic.Security.UserInfo GetUserModel()
+        {
+			try
+			{
+                var userModel = new Logic.Security.JWT(GetJWTToken());
+                if (userModel == null || !userModel.IsValid())
+                    return new Logic.Security.UserInfo();
 
+                return userModel.User;
+            }
+            catch(Exception ex)
+			{
+                return new Logic.Security.UserInfo();
+            }
+        }
+        private static string GetJWTToken()
+        {
+            try
+            {
+                IHttpContextAccessor ctx = new HttpContextAccessor();
+                var headers = ctx.HttpContext.Request.Headers["Authorization"];
+                if (headers.Count == 0)
+                    //در صورتی که نتوانستی اطلاعات را بدست بیاوری، با حروف کوچک امتحان کن
+                    headers = ctx.HttpContext.Request.Headers["authorization"];
+
+                if (headers.Count == 0)
+                    return null;
+
+                var header = headers.FirstOrDefault();
+                string token = "";
+                if (header != null)
+                {
+                    token = header.Replace("Bearer ", "").Replace("bearer ", "");
+                }
+           
+                return (token);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
         private UserInfo GetData(string token)
         {
             var validateToken = GetPrincipal(token);
@@ -104,6 +146,9 @@ namespace FTSS.Logic.Security
         {
             this._user = GetData(token);
         }
+
+
+       
 
         private ClaimsPrincipal GetPrincipal(string token)
         {

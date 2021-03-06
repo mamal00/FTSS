@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace FTSS.Logic.Database.StoredProcedure
 {
-    public class SP_User_Insert
-    {
+	public class SP_User_Delete
+	{
         public static async Task<Models.Database.DBResult> Call(IDBCTX ctx,
-            Models.Database.Tables.Users data)
+  Models.Database.BaseIdModel param)
         {
             var connectionString = ctx.GetConnectionString();
-            var sp = new FTSS.DP.DapperORM.StoredProcedure.SP_User_Insert(connectionString);
-            data.Token = JWT.GetUserModel().User.Token;
-            var rst =await sp.Call(data);
+            var sp = new FTSS.DP.DapperORM.StoredProcedure.SP_User_Delete(connectionString);
+            param.Token = JWT.GetUserModel().User.Token;
+            var rst = await sp.Call(param);
             return rst;
         }
     }

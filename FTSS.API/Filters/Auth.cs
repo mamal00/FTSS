@@ -52,6 +52,7 @@ namespace FTSS.API.Filters
                 return null;
             }
         }
+       
 
         /// <summary>
         /// Find requested api address
@@ -105,7 +106,7 @@ namespace FTSS.API.Filters
             _userModel = jwt.User;
             return true;
         }
-
+   
         /// <summary>
         /// Check user access to this new request
         /// </summary>

@@ -1,33 +1,33 @@
 ﻿using Dapper;
 using FTSS.Models.Database;
-using FTSS.Models.Database.Tables;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace FTSS.DP.DapperORM.StoredProcedure
 {
-    public class SP_User_Insert : ISP<Models.Database.Tables.Users>
-    {
+	public class SP_Users_Get : ISP<Models.Database.StoredProcedures.SP_Users_Get_Params>
+	{
         private readonly string _cns;
 
-        public SP_User_Insert(string cns)
+        public SP_Users_Get(string cns)
         {
             _cns = cns;
         }
 
-        public async Task<DBResult> Call(Users data)
+        public async Task<DBResult> Call(Models.Database.StoredProcedures.SP_Users_Get_Params filterParams)
         {
-            string sql = "dbo.SP_User_Insert";
+
+            string sql = "dbo.SP_Users_Get";
             DBResult rst = null;
+
             using (var connection = new SqlConnection(_cns))
             {
-                var p = Common.GetDataParams(data);
-                p.AddDynamicParams(Common.GenerateParams(data, new List<string>{"UserId","Token" }));
-                var dbResult =await connection.QueryFirstAsync<Models.Database.StoredProcedures.SP_User_Insert>(
+                var p = Common.GetSearchParams(filterParams.Token);
+                p.AddDynamicParams(Common.GenerateParams(filterParams, new List<string> { "Token"}));
+                var dbResult = await connection.QueryFirstOrDefaultAsync<Models.Database.StoredProcedures.SP_Users_Get>(
                     sql, p, commandType: System.Data.CommandType.StoredProcedure);
                 rst = Common.GetResult(p, dbResult);
             }
