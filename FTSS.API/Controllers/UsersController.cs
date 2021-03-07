@@ -21,7 +21,7 @@ namespace FTSS.API.Controllers
         /// </summary>
         /// <param name="filterParams"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPut]
         [Filters.Auth]
         public async Task<IActionResult> GetAll([FromBody] Models.Database.StoredProcedures.SP_Users_GetAll_Params filterParams)
         {
@@ -41,7 +41,7 @@ namespace FTSS.API.Controllers
         /// </summary>
         /// <param name="filterParams"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPut]
         [Filters.Auth]
         public async Task<IActionResult> Get([FromBody] Models.Database.StoredProcedures.SP_Users_Get_Params filterParams)
         {
