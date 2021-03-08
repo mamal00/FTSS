@@ -35,7 +35,7 @@ namespace FTSS.Logic.Security
             }
             catch(Exception ex)
 			{
-                return new Logic.Security.UserInfo();
+                throw new Exception(ex.Message);
             }
         }
         private static string GetJWTToken()
@@ -43,6 +43,10 @@ namespace FTSS.Logic.Security
             try
             {
                 IHttpContextAccessor ctx = new HttpContextAccessor();
+                if(ctx.HttpContext==null)
+				{
+                    throw new Exception("Context Is Null");
+				}
                 var headers = ctx.HttpContext.Request.Headers["Authorization"];
                 if (headers.Count == 0)
                     //در صورتی که نتوانستی اطلاعات را بدست بیاوری، با حروف کوچک امتحان کن
@@ -60,9 +64,9 @@ namespace FTSS.Logic.Security
            
                 return (token);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                throw new Exception(ex.Message);
             }
         }
         private UserInfo GetData(string token)

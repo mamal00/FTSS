@@ -51,7 +51,7 @@ namespace FTSS.API.Controllers
             catch (Exception e)
             {
                 _logger.Add(e, "Error in UserProfileController.Update(data)");
-                return Problem(e.Message, e.StackTrace, 500, "Error in Update");
+                  return Problem(e.Message, e.StackTrace, 500, "Error in Update");
             }
         }
         [HttpPut]
