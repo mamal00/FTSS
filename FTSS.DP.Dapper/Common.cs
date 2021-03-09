@@ -32,6 +32,12 @@ namespace FTSS.DP.DapperORM
 
         public static DynamicParameters GetSearchParams(Models.Database.BaseSearchParams filterParams)
         {
+            if (filterParams == null)
+                throw new ArgumentNullException("خطا در نحوه ارسال درخواست رخ داده است");
+            if(filterParams.StartIndex<0 || (filterParams.StartIndex == 0 && filterParams.PageSize <= 0))
+			{
+                throw new ArgumentException("خطا در نحوه ارسال درخواست رخ داده است");
+			}
             var p = GetSearchParams(filterParams.Token);
             
             //Pagination
@@ -47,6 +53,8 @@ namespace FTSS.DP.DapperORM
 
         public static DynamicParameters GetDataParams(Models.Database.BaseModel data)
         {
+            if (data == null)
+                throw new ArgumentNullException("خطا در نحوه ارسال درخواست رخ داده است!");
             var p = GetSearchParams(data.Token);
             return p;
         }
@@ -62,6 +70,8 @@ namespace FTSS.DP.DapperORM
         /// <returns></returns>
         public static Models.Database.DBResult GetResult(DynamicParameters p, object data)
         {
+            if (p == null)
+                throw new ArgumentNullException("خطا در نحوه ارسال درخواست رخ داده است");
             var rst = new Models.Database.DBResult()
             {
                 ErrorCode = p.Get<int>("ErrorCode"),
