@@ -17,7 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BE2F4E04
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FTSS.Logic.Tests", "FTSS.Logic.Tests\FTSS.Logic.Tests.csproj", "{264D514E-5CF0-4822-A8BF-EB6DB9233CED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTSS.API.Test", "FTSS.API.Test\FTSS.API.Test.csproj", "{2712AC63-1481-43C3-8AB2-23A82E84BC72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FTSS.API.Test", "FTSS.API.Test\FTSS.API.Test.csproj", "{2712AC63-1481-43C3-8AB2-23A82E84BC72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FTSS.DP.DapperORM.Test", "FTSS.DP.DapperORM.Test\FTSS.DP.DapperORM.Test.csproj", "{662DE785-6ED0-44F4-999F-0140F9D0A30D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{2712AC63-1481-43C3-8AB2-23A82E84BC72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2712AC63-1481-43C3-8AB2-23A82E84BC72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2712AC63-1481-43C3-8AB2-23A82E84BC72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{662DE785-6ED0-44F4-999F-0140F9D0A30D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{662DE785-6ED0-44F4-999F-0140F9D0A30D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{662DE785-6ED0-44F4-999F-0140F9D0A30D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{662DE785-6ED0-44F4-999F-0140F9D0A30D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{264D514E-5CF0-4822-A8BF-EB6DB9233CED} = {BE2F4E04-8E74-4FF0-A1FA-1C9808E66022}
 		{2712AC63-1481-43C3-8AB2-23A82E84BC72} = {BE2F4E04-8E74-4FF0-A1FA-1C9808E66022}
+		{662DE785-6ED0-44F4-999F-0140F9D0A30D} = {BE2F4E04-8E74-4FF0-A1FA-1C9808E66022}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E6EC93B6-CB6D-4531-9762-348209422489}

@@ -22,6 +22,8 @@ namespace FTSS.DP.DapperORM
 
         public static DynamicParameters GetSearchParams(string token)
         {
+            if(string.IsNullOrEmpty(token))
+                throw new ArgumentNullException("امضای کاربری یافت نشد");
             var p = GetSearchParams();
             p.Add("@Token", token);
 
