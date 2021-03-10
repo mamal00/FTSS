@@ -1,0 +1,29 @@
+﻿@page
+@model IndexModel
+
+<div class="modal-dialog text-center">
+    <div class="col-sm-8 main-section">
+        <div class="modal-content">
+            <div class="col-12 user-img">
+                <img src="./img/user.png" />
+            </div>
+            <form class="col-12" method="post" id="login" asp-page-handler="Login" autocomplete="off">
+                <div class="form-group" id="user-group">
+                    <input type="text" asp-for="username" class="form-control" placeholder="نام کاربری" name="username" />
+                </div>
+                <div class="form-group" id="contrasena-group">
+                    <input type="password" asp-for="password" class="form-control" placeholder="کلمه عبور" name="password" />
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="far fa-sign-in-alt"></i>  ورود </button>
+            </form>
+            @if (ViewData["message"]!=null &&!string.IsNullOrEmpty(ViewData["message"].ToString()))
+            {
+        <div class="alert alert-danger" role="alert">
+            @ViewData["message"]
+        </div>
+            }
+
+
+        </div>
+    </div>
+</div>
