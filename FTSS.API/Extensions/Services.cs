@@ -67,7 +67,6 @@ namespace FTSS.API.Extensions
             services.AddSingleton<Logic.Database.IDBCTX>(ctx);
         }
 
-
         /// <summary>
         /// Add Logger service to services pool
         /// </summary>

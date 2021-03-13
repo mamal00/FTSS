@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FTSS.Models.Database.StoredProcedures;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -28,16 +29,17 @@ namespace FTSS.Logic.Log
         {
             string text = string.Format("{0}\nException: {1}\nStackTrace: {2}\n",
                 customMessage ?? "", e.Message, e.StackTrace);
-            this.Add(text);
+            var model = new SP_Log_Insert_Params(text);
+            this.Add(model);
         }
 
         /// <summary>
         /// Log a simple text at a file
         /// </summary>
         /// <param name="msg"></param>
-        public void Add(string msg)
+        public void Add(SP_Log_Insert_Params model)
         {
-            string text = string.Format("{0}: {1}\n", DateTime.Now, msg);
+            string text = string.Format("{0}: {1}\n", DateTime.Now, model.Msg);
             _file.Append(text);
         }
     }

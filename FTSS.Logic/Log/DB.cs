@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FTSS.DP.DapperORM.StoredProcedure;
+using FTSS.Models.Database.StoredProcedures;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,9 +11,9 @@ namespace FTSS.Logic.Log
     /// </summary>
     public class DB : ILog
     {
-        Models.Database.ISP<string> _storedProcedure;
+        Models.Database.ISP<SP_Log_Insert_Params> _storedProcedure;
 
-        public DB(Models.Database.ISP<string> storedProcedure)
+        public DB(Models.Database.ISP<SP_Log_Insert_Params> storedProcedure)
         {
             _storedProcedure = storedProcedure;
         }
@@ -25,17 +27,17 @@ namespace FTSS.Logic.Log
         {
             string text = string.Format("{0}\nException: {1}\nStackTrace: {2}\n",
                 customMessage ?? "", e.Message, e.StackTrace);
-            this.Add(text);
+            var model = new SP_Log_Insert_Params(text);
+            this.Add(model);
         }
 
         /// <summary>
         /// Log a simple text at database
         /// </summary>
         /// <param name="msg"></param>
-        public void Add(string msg)
+        public void Add(SP_Log_Insert_Params model)
         {
-            string text = string.Format("{0}", msg);
-            _storedProcedure.Call(text);
+            _storedProcedure.Call(model);
         }
     }
 }

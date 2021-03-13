@@ -22,21 +22,19 @@ namespace FTSS.Models.Database
         public int ErrorCode { get; set; }
 
         public string ErrorMessage { get; set; }
-
         public DBResult()
         {
         }
-
-        public DBResult(int errorCode, string errorMessage, object data = null, int actualSize = -1)
+        public DBResult(int errorCode, string errorMessage, object data = null, int actualSize = -1) 
         {
-            this.ErrorCode = errorCode;
-            this.ErrorMessage = errorMessage;
+			this.ErrorCode = errorCode;
+			this.ErrorMessage = errorMessage;
 
-            this.Data = data;
-            if (actualSize >= 0)
-                this.ActualSize = actualSize;
-            else
-                this.ActualSize = data == null ? 0 : 1;
-        }        
-    }
+			this.Data = data;
+			if (actualSize >= 0)
+				this.ActualSize = actualSize;
+			else
+				this.ActualSize = data == null ? 0 : 1;
+		}
+	}
 }
