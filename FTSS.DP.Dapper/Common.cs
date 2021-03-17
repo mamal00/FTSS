@@ -96,46 +96,35 @@ namespace FTSS.DP.DapperORM
         public static DynamicParameters GenerateParams(object data, List<string> exceptFields = null)
         {
             DynamicParameters parameters = new DynamicParameters();
-        
+
             if (data != null)
             {
-                    foreach (PropertyInfo propertyInfo in data.GetType().GetProperties().ToList())
+                foreach (PropertyInfo propertyInfo in data.GetType().GetProperties().ToList())
+                {
+                    bool finded = false;
+                    if (exceptFields != null && exceptFields.Count > 0)
                     {
-                        bool finded = false;
-                        if (exceptFields != null && exceptFields.Count > 0)
+                        foreach (var item in exceptFields)
                         {
-                            foreach (var item in exceptFields)
+                            if (item == propertyInfo.Name)
                             {
-                                if (item == propertyInfo.Name)
-                                {
-                                    finded = true;
-                                    break;
-                                }
-
-                            }
-                            if (finded == false)
-                            {
-                         
-                                parameters.Add("@" + propertyInfo.Name, IsDateTime(propertyInfo.GetValue(data)) ? propertyInfo.GetValue(data) : SafeFarsiStr(propertyInfo.GetValue(data)) ?? null);
+                                finded = true;
+                                break;
                             }
                         }
-                        else
-                        {
-                    
+                        if (finded == false)
                             parameters.Add("@" + propertyInfo.Name, IsDateTime(propertyInfo.GetValue(data)) ? propertyInfo.GetValue(data) : SafeFarsiStr(propertyInfo.GetValue(data)) ?? null);
-                   
-
-                            
-                        }
                     }
-                
-
+                    else
+                    {
+                        parameters.Add("@" + propertyInfo.Name, IsDateTime(propertyInfo.GetValue(data)) ? propertyInfo.GetValue(data) : SafeFarsiStr(propertyInfo.GetValue(data)) ?? null);
+                    }
+                }
             }
-    
+
             return parameters;
-
-
         }
+
         private static object SafeFarsiStr(object input)
         {
             if (input == null)
