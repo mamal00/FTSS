@@ -24,6 +24,7 @@ namespace FTSS.DP.DapperORM.StoredProcedure
             {
                 var p = Common.GetSearchParams(filterParams);
                 p.AddDynamicParams(Common.GenerateParams(filterParams, new List<string> { "Token", "PageSize", "StartIndex", "Sort" }));
+
                 var dbResult = await connection.QueryAsync<Models.Database.StoredProcedures.SP_Fish_GetAll>(
                     sql, p, commandType: System.Data.CommandType.StoredProcedure);
                 rst = Common.GetResult(p, dbResult);
