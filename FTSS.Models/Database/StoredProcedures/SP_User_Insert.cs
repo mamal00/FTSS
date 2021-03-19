@@ -6,6 +6,6 @@ namespace FTSS.Models.Database.StoredProcedures
 {
     public class SP_User_Insert
     {
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
     }
 }

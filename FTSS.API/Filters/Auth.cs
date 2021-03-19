@@ -151,7 +151,7 @@ namespace FTSS.API.Filters
             if (!IsAccessToCurrentRequest(context))
             {
                 //If user should not access this API
-                context.Result = new UnauthorizedObjectResult("Access denied");
+                context.Result = new StatusCodeResult(403);
                 return;
             }
         }

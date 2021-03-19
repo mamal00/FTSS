@@ -143,7 +143,7 @@ namespace FTSS.DP.DapperORM
             var text = input.ToString();
             if (!string.IsNullOrEmpty(text))
             {
-                return (object)text.Replace("ﮎ", "ک").Replace("ﮏ", "ک").Replace("ﮐ", "ک").Replace("ﮑ", "ک").Replace("ك", "ک").Replace("ي", "ی").Replace("ی", "ی").Replace("اِ", "ا").Replace("اُ", "ا").Replace("اَ", "ا").Replace("اً", "ا").Replace("اٌ", "ا").Replace("اٍ", "ا").Replace("اّ", "ا");
+                return (object)text.Replace("ﮎ", "ک").Replace("ﮏ", "ک").Replace("ﮐ", "ک").Replace("ﮑ", "ک").Replace("ك", "ک").Replace("ي", "ی").Replace("ي", "ی").Replace("ی", "ی").Replace("اِ", "ا").Replace("اُ", "ا").Replace("اَ", "ا").Replace("اً", "ا").Replace("اٌ", "ا").Replace("اٍ", "ا").Replace("اّ", "ا");
             }
             return null;
         }

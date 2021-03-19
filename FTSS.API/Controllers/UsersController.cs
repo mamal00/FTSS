@@ -79,6 +79,25 @@ namespace FTSS.API.Controllers
             }
         }
         /// <summary>
+        /// Update user to database
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] Models.Database.Tables.Users data)
+        {
+            try
+            {
+                var rst = await Logic.Database.StoredProcedure.SP_User_Update.Call(_ctx, data);
+                return FromDatabase(rst);
+            }
+            catch (Exception e)
+            {
+                _logger.Add(e, "Error in UsersController.Update(data)");
+                return Problem(e.Message, e.StackTrace, 500, "Error in Insert");
+            }
+        }
+        /// <summary>
         /// Login and get database token
         /// </summary>
         /// <param name="filterParams"></param>
@@ -103,7 +122,7 @@ namespace FTSS.API.Controllers
         /// <param name="data"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] Models.Database.BaseIdModel data)
+        public async Task<IActionResult> Delete([FromQuery] Models.Database.BaseIdModel data)
         {
             try
             {
