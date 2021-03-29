@@ -98,6 +98,25 @@ namespace FTSS.API.Controllers
             }
         }
         /// <summary>
+        /// Update Password For Users
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<IActionResult> UpdatePassword([FromBody] Models.Database.StoredProcedures.SP_User_SetPassword_Params data)
+        {
+            try
+            {
+                var rst = await Logic.Database.StoredProcedure.SP_User_SetPassword.Call(_ctx, data);
+                return FromDatabase(rst);
+            }
+            catch (Exception e)
+            {
+                _logger.Add(e, "Error in UsersController.UpdatePassword(data)");
+                return Problem(e.Message, e.StackTrace, 500, "Error in UpdatePassword");
+            }
+        }
+        /// <summary>
         /// Login and get database token
         /// </summary>
         /// <param name="filterParams"></param>
