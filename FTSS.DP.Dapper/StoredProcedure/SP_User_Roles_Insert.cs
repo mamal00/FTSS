@@ -8,17 +8,18 @@ using System.Threading.Tasks;
 
 namespace FTSS.DP.DapperORM.StoredProcedure
 {
-	public class SP_User_Delete : ISP<Models.Database.BaseIdModel>
-    {
+	public class SP_User_Roles_Insert : ISP<Models.Database.StoredProcedures.SP_User_Roles_Insert_Params>
+	{
         private readonly string _cns;
-        public SP_User_Delete(string cns)
+
+        public SP_User_Roles_Insert(string cns)
         {
             _cns = cns;
         }
 
-        public async Task<DBResult> Call(BaseIdModel data)
+        public async Task<DBResult> Call(Models.Database.StoredProcedures.SP_User_Roles_Insert_Params data)
         {
-            string sql = "dbo.SP_User_Roles_Delete";
+            string sql = "dbo.SP_User_Roles_Insert";
             DBResult rst = null;
             using (var connection = new SqlConnection(_cns))
             {

@@ -8,27 +8,27 @@ using System.Threading.Tasks;
 
 namespace FTSS.DP.DapperORM.StoredProcedure
 {
-	public class SP_User_Delete : ISP<Models.Database.BaseIdModel>
+	public class SP_User_Menu_GetAll : ISP<Models.Database.BaseIdModel>
     {
         private readonly string _cns;
-        public SP_User_Delete(string cns)
+        public SP_User_Menu_GetAll(string cns)
         {
             _cns = cns;
         }
 
-        public async Task<DBResult> Call(BaseIdModel data)
+        public async Task<DBResult> Call(Models.Database.BaseIdModel filterParams)
         {
-            string sql = "dbo.SP_User_Roles_Delete";
+            string sql = "dbo.SP_User_Menu_GetAll";
             DBResult rst = null;
             using (var connection = new SqlConnection(_cns))
             {
-                var p = Common.GetDataParams(data);
-                p.AddDynamicParams(Common.GenerateParams(data, new List<string> { "Token" }));
-                var dbResult = await connection.QueryFirstOrDefaultAsync<Models.Database.BaseIdModel>(
+                var p = Common.GetSearchParams(filterParams.Token);
+                p.AddDynamicParams(Common.GenerateParams(filterParams, new List<string> { "Token"}));
+
+                var dbResult = await connection.QueryAsync<Models.Database.StoredProcedures.SP_User_Menu_GetAll>(
                     sql, p, commandType: System.Data.CommandType.StoredProcedure);
                 rst = Common.GetResult(p, dbResult);
             }
-
             return rst;
         }
     }

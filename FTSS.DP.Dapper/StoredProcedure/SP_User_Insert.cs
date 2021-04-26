@@ -27,7 +27,7 @@ namespace FTSS.DP.DapperORM.StoredProcedure
             {
                 var p = Common.GetDataParams(data);
                 p.AddDynamicParams(Common.GenerateParams(data, new List<string>{"UserId","Token" }));
-                var dbResult =await connection.QueryFirstAsync<Models.Database.StoredProcedures.SP_User_Insert>(
+                var dbResult =await connection.QueryFirstOrDefaultAsync<Models.Database.BaseIdModel>(
                     sql, p, commandType: System.Data.CommandType.StoredProcedure);
                 rst = Common.GetResult(p, dbResult);
             }

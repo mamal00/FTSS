@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace FTSS.DP.DapperORM.StoredProcedure
 {
-	public class SP_User_Delete : ISP<Models.Database.BaseIdModel>
-    {
+	public class SP_User_Roles_Delete : ISP<Models.Database.BaseIdModel>
+	{
         private readonly string _cns;
-        public SP_User_Delete(string cns)
+        public SP_User_Roles_Delete(string cns)
         {
             _cns = cns;
         }
