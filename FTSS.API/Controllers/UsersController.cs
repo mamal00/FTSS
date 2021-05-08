@@ -11,11 +11,34 @@ namespace FTSS.API.Controllers
     [Route("/api/[controller]/[action]")]
     public class UsersController : BaseController
     {
+        /// <summary>
+        /// Access to appsettings.json
+        /// </summary>
+        public readonly IConfiguration _configuration;
         public UsersController(Logic.Database.IDBCTX dbCTX, Logic.Log.ILog logger) 
             : base(dbCTX, logger)
         {
         }
+        /// <summary>
+        /// Read JWT key from appsettings.json
+        /// </summary>
+        //public string JWTKey
+        //{
+        //    get
+        //    {
+        //        var rst = this._configuration.GetValue<string>("JWT:Key");
+        //        return (rst);
+        //    }
+        //}
 
+        //public string JWTIssuer
+        //{
+        //    get
+        //    {
+        //        var rst = this._configuration.GetValue<string>("JWT:Issuer");
+        //        return (rst);
+        //    }
+        //}
         /// <summary>
         /// Search between all users by filter parameters
         /// </summary>
