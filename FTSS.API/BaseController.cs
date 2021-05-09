@@ -11,11 +11,13 @@ namespace FTSS.API
     {
         public readonly Logic.Database.IDBCTX _ctx;
         public readonly Logic.Log.ILog _logger;
+        public readonly IConfiguration _configuration;
 
-        public BaseController(Logic.Database.IDBCTX dbCTX, Logic.Log.ILog logger)
+        public BaseController(Logic.Database.IDBCTX dbCTX, Logic.Log.ILog logger, IConfiguration configuration)
         {
             _ctx = dbCTX;
             _logger = logger;
+            _configuration = configuration;
         }
 
         /// <summary>

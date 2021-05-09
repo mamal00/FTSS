@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -40,6 +41,26 @@ namespace FTSS.API.Extensions
             });
 
         }
+        /// <summary>
+        /// Setup JWT validator
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        public static void AddJWT(this IServiceCollection services, IConfiguration configuration)
+        {
+            string key = configuration.GetValue<string>("JWT:Key");
+            string issuer = configuration.GetValue<string>("JWT:Issuer");
+
+            //When a request receive, this operations check the JWT and set User object
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = Logic.Security.JWT.GetTokenValidationParameters(key, issuer);
+                    options.Events = Logic.Security.JWT.GetJWTEvents();
+                });
+        }
+
         public static void CompressSetting(this IServiceCollection services)
         {
             services.AddResponseCompression(options => {
@@ -109,6 +130,22 @@ namespace FTSS.API.Extensions
                     BearerFormat = "Authorization: Bearer {token}"
                 });
             });
+        }
+        /// <summary>
+        /// Add default mapper to the service pool
+        /// </summary>
+        /// <param name="services"></param>
+        public static AutoMapper.IMapper AddMapper(this IServiceCollection services)
+        {
+            //Create default mapper
+            var mapConfig = new AutoMapper.MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new Logic.CommonOperations.Mapper());
+            });
+
+            AutoMapper.IMapper mapper = mapConfig.CreateMapper();
+            services.AddSingleton(mapper);
+            return mapper;
         }
     }
 }

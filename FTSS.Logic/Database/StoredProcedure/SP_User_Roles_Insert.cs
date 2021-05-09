@@ -9,11 +9,11 @@ namespace FTSS.Logic.Database.StoredProcedure
 	public class SP_User_Roles_Insert
 	{
         public static async Task<Models.Database.DBResult> Call(IDBCTX ctx,
-           Models.Database.StoredProcedures.SP_User_Roles_Insert_Params data)
+           Models.Database.StoredProcedures.SP_User_Roles_Insert_Params data, string key, string issuer)
         {
             var connectionString = ctx.GetConnectionString();
             var sp = new FTSS.DP.DapperORM.StoredProcedure.SP_User_Roles_Insert(connectionString);
-            data.Token = JWT.GetUserModel().User.Token;
+            data.Token = JWT.GetUserModel(key,issuer).User.Token;
             var rst = await sp.Call(data);
             return rst;
         }

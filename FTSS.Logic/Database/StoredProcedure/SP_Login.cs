@@ -9,13 +9,14 @@ namespace FTSS.Logic.Database.StoredProcedure
 {
     public class SP_Login
     {
+	
         /// <summary>
         /// Calling SP_Login stored procedure in database
         /// </summary>
         /// <param name="ctx"></param>
         /// <param name="filterParams"></param>
         /// <returns></returns>
-        public static async Task<Models.Database.DBResult> Call(IDBCTX ctx,
+        public static async Task<Models.Database.DBResult> Call(IDBCTX ctx, AutoMapper.IMapper mapper,
             Models.Database.StoredProcedures.SP_Login_Params filterParams,string key,string issuer)
         {
             var connectionString = ctx.GetConnectionString();
@@ -23,8 +24,10 @@ namespace FTSS.Logic.Database.StoredProcedure
             var rst =await sp.Call(filterParams);
             var spAccessMenu = new FTSS.DP.DapperORM.StoredProcedure.SP_User_GetAccessMenu(connectionString);
             var spAccessMenuResult=await spAccessMenu.Call(rst.Data as Models.Database.StoredProcedures.SP_Login);
-            string accessMenuJson =JSON.ObjToJson(spAccessMenuResult.Data);
-            var response= JWT.GenerateToken(rst.Data,accessMenuJson,key,issuer);
+            //Convert Teacher to User object
+            var user = mapper.Map<UserInfo>(rst.Data);
+            user.accessMenuJson= JSON.ObjToJson(spAccessMenuResult.Data);
+            var response= JWT.GenerateToken(user,key,issuer);
             return response;
         }
     }

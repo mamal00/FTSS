@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,28 @@ namespace FTSS.API.Controllers
 	[ApiController]
 	public class UserProfileController : BaseController
 	{
-        public UserProfileController(Logic.Database.IDBCTX dbCTX, Logic.Log.ILog logger)
-           : base(dbCTX, logger)
+        /// <summary>
+        /// Read JWT key from appsettings.json
+        /// </summary>
+        public string JWTKey
+        {
+            get
+            {
+                var rst = this._configuration.GetValue<string>("JWT:Key");
+                return (rst);
+            }
+        }
+
+        public string JWTIssuer
+        {
+            get
+            {
+                var rst = this._configuration.GetValue<string>("JWT:Issuer");
+                return (rst);
+            }
+        }
+        public UserProfileController(Logic.Database.IDBCTX dbCTX, Logic.Log.ILog logger, IConfiguration configuration)
+           : base(dbCTX, logger, configuration)
         {
         }
 
@@ -26,7 +47,7 @@ namespace FTSS.API.Controllers
         {
             try
             {
-                var dbResult = await Logic.Database.StoredProcedure.SP_Users_Get.CallProfile(_ctx);
+                var dbResult = await Logic.Database.StoredProcedure.SP_Users_Get.CallProfile(_ctx, JWTKey, JWTIssuer);
                 return FromDatabase(dbResult);
             }
             catch (Exception e)
@@ -45,7 +66,7 @@ namespace FTSS.API.Controllers
         {
             try
             {
-                var rst = await Logic.Database.StoredProcedure.SP_User_UpdateProfile.Call(_ctx, data);
+                var rst = await Logic.Database.StoredProcedure.SP_User_UpdateProfile.Call(_ctx, data, JWTKey, JWTIssuer);
                 return FromDatabase(rst);
             }
             catch (Exception e)
@@ -59,7 +80,7 @@ namespace FTSS.API.Controllers
         {
             try
             {
-                var rst = await Logic.Database.StoredProcedure.SP_User_ChangePassword.Call(_ctx, data);
+                var rst = await Logic.Database.StoredProcedure.SP_User_ChangePassword.Call(_ctx, data, JWTKey, JWTIssuer);
                 return FromDatabase(rst);
             }
             catch (Exception e)

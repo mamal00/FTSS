@@ -1,5 +1,6 @@
 ﻿using FTSS.Logic.CommonOperations;
 using FTSS.Models.Database;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -8,12 +9,12 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FTSS.Logic.Security
 {
     public class JWT
     {
-        private const string key = "501b09eab3c013d4ca54922bb802bec8fd5318192b0a75f201d8b3727429090fb337591abd3e44453b954555b7a0812e1081c39b740293f765eae731f5a65ed1";
 
         private readonly UserInfo _user;
         public UserInfo User
@@ -23,12 +24,55 @@ namespace FTSS.Logic.Security
                 return _user;
             }
         }
-     
-        public static Logic.Security.UserInfo GetUserModel()
+
+        /// <summary>
+        /// Generate token validation
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="issuer"></param>
+        /// <returns></returns>
+        public static TokenValidationParameters GetTokenValidationParameters(string key, string issuer)
+        {
+            if (string.IsNullOrWhiteSpace(key) || string.IsNullOrWhiteSpace(issuer))
+                throw new ArgumentNullException("key and issuer could not be empty. Check application settings.");
+
+            var rst = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = false,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = issuer,
+                IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(key))
+            };
+
+            return rst;
+        }
+
+        /// <summary>
+        /// Get authentication event handler by JWT
+        /// </summary>
+        /// <returns></returns>
+        public static JwtBearerEvents GetJWTEvents()
+        {
+            var rst = new JwtBearerEvents
+            {
+                OnAuthenticationFailed = context =>
+                {
+                    if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
+                        context.Response.Headers.Add("Token-Expired", "true");
+
+                    return Task.CompletedTask;
+                }
+            };
+
+            return rst;
+        }
+
+        public static Logic.Security.UserInfo GetUserModel(string keyValue,string issuerValue)
         {
 			try
 			{
-                var userModel = new Logic.Security.JWT(GetJWTToken());
+                var userModel = new Logic.Security.JWT(GetJWTToken(), keyValue, issuerValue);
                 if (userModel == null || !userModel.IsValid())
                     return new Logic.Security.UserInfo();
 
@@ -70,9 +114,9 @@ namespace FTSS.Logic.Security
                 throw new Exception(ex.Message);
             }
         }
-        private UserInfo GetData(string token)
+        private UserInfo GetData(string token,string keyValue,string issuerValue)
         {
-            var validateToken = GetPrincipal(token);
+            var validateToken = GetPrincipal(token, keyValue,issuerValue);
 
             if (validateToken != null)
             {
@@ -86,7 +130,7 @@ namespace FTSS.Logic.Security
 
                     model.User.FirstName = getValueFromClaim(validateToken.Claims, "FirstName");
                     model.User.LastName = getValueFromClaim(validateToken.Claims, "LastName");
-                    model.User.Token = getValueFromClaim(validateToken.Claims, "token");
+                    model.User.Token = getValueFromClaim(validateToken.Claims, "Token");
                     var accessMenuJSON = getValueFromClaim(validateToken.Claims, "AccessMenu");
                     if (!string.IsNullOrEmpty(accessMenuJSON) && accessMenuJSON != "null")
                         model.AccessMenu = CommonOperations.JSON.jsonToT<List<Models.Database.StoredProcedures.SP_User_GetAccessMenu>>(accessMenuJSON);
@@ -103,7 +147,7 @@ namespace FTSS.Logic.Security
         /// </summary>
         /// <param name="data">UserInfo object</param>
         /// <returns>JWT token which is a string</returns>
-        public static DBResult GenerateToken(object data,string accessMenuJson,string keyValue,string issuerValue)
+        public static DBResult GenerateToken(UserInfo data,string keyValue,string issuerValue)
         {
             var symmetricKey = Convert.FromBase64String(keyValue);
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -112,12 +156,12 @@ namespace FTSS.Logic.Security
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.Name,ObjectHelper.getValue<string>("Email", data)),
-                    new Claim("FirstName",ObjectHelper.getValue<string>("FirstName", data)),
-                    new Claim("LastName",ObjectHelper.getValue<string>("LastName", data)),
-                    new Claim("UserId",ObjectHelper.getValue<int>("UserId", data).ToString()),
-                    new Claim("Token",ObjectHelper.getValue<string>("Token", data)),
-                    new Claim("AccessMenu", accessMenuJson),
+                    new Claim(ClaimTypes.Name,data.Email),
+                    new Claim("FirstName",data.FirstName),
+                    new Claim("LastName",data.LastName),
+                    new Claim("UserId",data.UserId.ToString()),
+                    new Claim("Token",data.Token),
+                    new Claim("AccessMenu", data.accessMenuJson),
                     new Claim("scope", Guid.NewGuid().ToString()),
                 }),
                 Issuer=issuerValue,
@@ -143,15 +187,36 @@ namespace FTSS.Logic.Security
         {
         }
 
-        public JWT(string token)
+        public JWT(string token,string keyValue,string issuerValue)
         {
-            this._user = GetData(token);
+            this._user = GetData(token, keyValue,issuerValue);
         }
 
+        private static string GetClaimsFromContext(ClaimsPrincipal user, string key)
+        {
+            if (user == null)
+                return null;
+            var item = user.FindFirst(key);
+            if (item == null)
+                return null;
+            return item.Value;
+        }
 
-       
+        public static UserInfo GetUserInfoFromContext( ClaimsPrincipal user)
+        {
+            string accessMenuJson = GetClaimsFromContext(user, "AccessMenu");
+            var reponse = new UserInfo
+            {
+                Username = GetClaimsFromContext(user, "UserId"),
+                FirstName= GetClaimsFromContext(user, "FirstName"),
+                LastName = GetClaimsFromContext(user, "LastName"),
+                Token= GetClaimsFromContext(user, "Token"),
+                AccessMenu= !string.IsNullOrEmpty(accessMenuJson) && accessMenuJson != "null"? CommonOperations.JSON.jsonToT<List<Models.Database.StoredProcedures.SP_User_GetAccessMenu>>(accessMenuJson):new List<Models.Database.StoredProcedures.SP_User_GetAccessMenu>(),
+            };
+            return reponse;
 
-        private ClaimsPrincipal GetPrincipal(string token)
+        }
+        private ClaimsPrincipal GetPrincipal(string token,string keyValue,string issuerValue)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var jwtToken = tokenHandler.ReadToken(token) as JwtSecurityToken;
@@ -159,14 +224,15 @@ namespace FTSS.Logic.Security
             if (jwtToken == null)
                 return null;
 
-            var symmetricKey = Convert.FromBase64String(key);
+            var symmetricKey = Convert.FromBase64String(keyValue);
 
             var validationParameters = new TokenValidationParameters()
             {
                 RequireExpirationTime = false,
-                ValidateIssuer = false,
+                ValidateIssuer = true,
                 ValidateAudience = false,
                 ValidateLifetime = false,
+                ValidIssuer=issuerValue,
                 IssuerSigningKey = new SymmetricSecurityKey(symmetricKey)
             };
 

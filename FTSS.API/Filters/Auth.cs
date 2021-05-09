@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FTSS.Logic.Security;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
@@ -99,11 +100,11 @@ namespace FTSS.API.Filters
         /// <returns></returns>
         private bool GetUserModel(AuthorizationFilterContext context)
         {
-            var jwt = new Logic.Security.JWT(_jwtToken);
-            if (jwt == null || !jwt.IsValid())
+            var jwt =JWT.GetUserInfoFromContext(context.HttpContext.User);
+            if (jwt == null)
                 return (false);
 
-            _userModel = jwt.User;
+            _userModel = jwt;
             return true;
         }
    

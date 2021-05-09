@@ -14,11 +14,11 @@ namespace FTSS.API.Controllers
         /// <summary>
         /// Access to appsettings.json
         /// </summary>
-        public readonly IConfiguration _configuration;
-        public UsersController(Logic.Database.IDBCTX dbCTX, Logic.Log.ILog logger, IConfiguration configuration) 
-            : base(dbCTX, logger)
+        private readonly AutoMapper.IMapper _mapper;
+        public UsersController(Logic.Database.IDBCTX dbCTX, Logic.Log.ILog logger, IConfiguration configuration, AutoMapper.IMapper mapper) 
+            : base(dbCTX, logger, configuration)
         {
-            _configuration = configuration;
+            _mapper = mapper;
         }
 		/// <summary>
 		/// Read JWT key from appsettings.json
@@ -51,7 +51,7 @@ namespace FTSS.API.Controllers
         {
             try
             {
-                var dbResult =await Logic.Database.StoredProcedure.SP_Users_GetAll.Call(_ctx, filterParams);
+                var dbResult =await Logic.Database.StoredProcedure.SP_Users_GetAll.Call(_ctx, filterParams, JWTKey,JWTIssuer);
                 return FromDatabase(dbResult);
             }
             catch (Exception e)
@@ -71,7 +71,7 @@ namespace FTSS.API.Controllers
         {
             try
             {
-                var dbResult = await Logic.Database.StoredProcedure.SP_Users_Get.Call(_ctx, filterParams);
+                var dbResult = await Logic.Database.StoredProcedure.SP_Users_Get.Call(_ctx, filterParams, JWTKey, JWTIssuer);
                 return FromDatabase(dbResult);
             }
             catch (Exception e)
@@ -93,7 +93,7 @@ namespace FTSS.API.Controllers
         {
             try
             {
-                var rst =await Logic.Database.StoredProcedure.SP_User_Insert.Call(_ctx, data);
+                var rst =await Logic.Database.StoredProcedure.SP_User_Insert.Call(_ctx, data, JWTKey, JWTIssuer);
                 return FromDatabase(rst);
             }
             catch (Exception e)
@@ -112,7 +112,7 @@ namespace FTSS.API.Controllers
         {
             try
             {
-                var rst = await Logic.Database.StoredProcedure.SP_User_Update.Call(_ctx, data);
+                var rst = await Logic.Database.StoredProcedure.SP_User_Update.Call(_ctx, data, JWTKey, JWTIssuer);
                 return FromDatabase(rst);
             }
             catch (Exception e)
@@ -131,7 +131,7 @@ namespace FTSS.API.Controllers
         {
             try
             {
-                var rst = await Logic.Database.StoredProcedure.SP_User_SetPassword.Call(_ctx, data);
+                var rst = await Logic.Database.StoredProcedure.SP_User_SetPassword.Call(_ctx, data, JWTKey, JWTIssuer);
                 return FromDatabase(rst);
             }
             catch (Exception e)
@@ -150,7 +150,7 @@ namespace FTSS.API.Controllers
         {
             try
             {
-                var rst = await Logic.Database.StoredProcedure.SP_Login.Call(_ctx, filterParams,JWTKey,JWTIssuer);
+                var rst = await Logic.Database.StoredProcedure.SP_Login.Call(_ctx,_mapper, filterParams,JWTKey,JWTIssuer);
                 return FromDatabase(rst);
             }
             catch (Exception e)
@@ -169,7 +169,7 @@ namespace FTSS.API.Controllers
         {
             try
             {
-                var rst = await Logic.Database.StoredProcedure.SP_User_Delete.Call(_ctx, data);
+                var rst = await Logic.Database.StoredProcedure.SP_User_Delete.Call(_ctx, data, JWTKey, JWTIssuer);
                 return FromDatabase(rst);
             }
             catch (Exception e)

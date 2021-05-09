@@ -45,6 +45,10 @@ namespace FTSS.API
             services.CompressSetting();
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddControllers();
+            //Add Mapper
+            var mapper = services.AddMapper();
+            //Add Authuntication service based on JWT
+            services.AddJWT(Configuration);
             //تنظیمات مجوز اجرا از روی دامنه های مختلف
             services.ConfigureCors();
             //جهت تبدیل جیسون به فرمت استاندارد_حرف اول کوچک
@@ -93,7 +97,7 @@ namespace FTSS.API
             //به برنامه میگوییم که از چه قوانینی پیروی کند
             app.UseCors(Services.corsPolicyName);
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
