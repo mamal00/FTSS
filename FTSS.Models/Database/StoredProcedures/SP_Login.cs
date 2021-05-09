@@ -9,11 +9,11 @@ namespace FTSS.Models.Database.StoredProcedures
         public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+		public string Email { get; set; }
 
-        
-        /// <summary>
-        /// Database token expiration
-        /// </summary>
-        public DateTime ExpireDate { get; set; }
+		/// <summary>
+		/// Database token expiration
+		/// </summary>
+		public DateTime ExpireDate { get; set; }
     }
 }

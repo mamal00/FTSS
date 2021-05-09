@@ -15,36 +15,37 @@ namespace FTSS.API.Controllers
         /// Access to appsettings.json
         /// </summary>
         public readonly IConfiguration _configuration;
-        public UsersController(Logic.Database.IDBCTX dbCTX, Logic.Log.ILog logger) 
+        public UsersController(Logic.Database.IDBCTX dbCTX, Logic.Log.ILog logger, IConfiguration configuration) 
             : base(dbCTX, logger)
         {
+            _configuration = configuration;
         }
-        /// <summary>
-        /// Read JWT key from appsettings.json
-        /// </summary>
-        //public string JWTKey
-        //{
-        //    get
-        //    {
-        //        var rst = this._configuration.GetValue<string>("JWT:Key");
-        //        return (rst);
-        //    }
-        //}
+		/// <summary>
+		/// Read JWT key from appsettings.json
+		/// </summary>
+		public string JWTKey
+		{
+			get
+			{
+				var rst = this._configuration.GetValue<string>("JWT:Key");
+				return (rst);
+			}
+		}
 
-        //public string JWTIssuer
-        //{
-        //    get
-        //    {
-        //        var rst = this._configuration.GetValue<string>("JWT:Issuer");
-        //        return (rst);
-        //    }
-        //}
-        /// <summary>
-        /// Search between all users by filter parameters
-        /// </summary>
-        /// <param name="filterParams"></param>
-        /// <returns></returns>
-        [HttpPut]
+		public string JWTIssuer
+		{
+			get
+			{
+				var rst = this._configuration.GetValue<string>("JWT:Issuer");
+				return (rst);
+			}
+		}
+		/// <summary>
+		/// Search between all users by filter parameters
+		/// </summary>
+		/// <param name="filterParams"></param>
+		/// <returns></returns>
+		[HttpPut]
         [Filters.Auth]
         public async Task<IActionResult> GetAll([FromBody] Models.Database.StoredProcedures.SP_Users_GetAll_Params filterParams)
         {
@@ -149,7 +150,7 @@ namespace FTSS.API.Controllers
         {
             try
             {
-                var rst = await Logic.Security.UserInfo.Login(_ctx, filterParams);
+                var rst = await Logic.Database.StoredProcedure.SP_Login.Call(_ctx, filterParams,JWTKey,JWTIssuer);
                 return FromDatabase(rst);
             }
             catch (Exception e)

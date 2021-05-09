@@ -1,4 +1,5 @@
-﻿using FTSS.Models.Database;
+﻿using FTSS.Logic.CommonOperations;
+using FTSS.Models.Database;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -10,7 +11,7 @@ using System.Text;
 
 namespace FTSS.Logic.Security
 {
-    public class JWT : IToken<UserInfo>
+    public class JWT
     {
         private const string key = "501b09eab3c013d4ca54922bb802bec8fd5318192b0a75f201d8b3727429090fb337591abd3e44453b954555b7a0812e1081c39b740293f765eae731f5a65ed1";
 
@@ -22,7 +23,7 @@ namespace FTSS.Logic.Security
                 return _user;
             }
         }
-
+     
         public static Logic.Security.UserInfo GetUserModel()
         {
 			try
@@ -102,37 +103,33 @@ namespace FTSS.Logic.Security
         /// </summary>
         /// <param name="data">UserInfo object</param>
         /// <returns>JWT token which is a string</returns>
-        public string GenerateToken(UserInfo data)
+        public static DBResult GenerateToken(object data,string accessMenuJson,string keyValue,string issuerValue)
         {
-            var user = data.User;
-            var accessMenu = data.AccessMenu;
-            var accessMenuJSON = CommonOperations.JSON.ObjToJson(accessMenu);
-
-            var symmetricKey = Convert.FromBase64String(key);
+            var symmetricKey = Convert.FromBase64String(keyValue);
             var tokenHandler = new JwtSecurityTokenHandler();
             
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.Name, data.Username),
-                    new Claim("FirstName", user.FirstName),
-                    new Claim("LastName", user.LastName),
-                    new Claim("UserId", user.UserId.ToString()),
-                    new Claim("Token", user.Token),
-                    new Claim("AccessMenu", accessMenuJSON),
+                    new Claim(ClaimTypes.Name,ObjectHelper.getValue<string>("Email", data)),
+                    new Claim("FirstName",ObjectHelper.getValue<string>("FirstName", data)),
+                    new Claim("LastName",ObjectHelper.getValue<string>("LastName", data)),
+                    new Claim("UserId",ObjectHelper.getValue<int>("UserId", data).ToString()),
+                    new Claim("Token",ObjectHelper.getValue<string>("Token", data)),
+                    new Claim("AccessMenu", accessMenuJson),
                     new Claim("scope", Guid.NewGuid().ToString()),
                 }),
-                Expires = user.ExpireDate,
+                Issuer=issuerValue,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(symmetricKey), SecurityAlgorithms.HmacSha256)
             };
 
             SecurityToken securityToken = tokenHandler.CreateToken(tokenDescriptor);
             var token = tokenHandler.WriteToken(securityToken);
 
-            return token;
+            return new DBResult(200,"", token ,1);
         }
-
+   
 
         public bool IsValid()
         {

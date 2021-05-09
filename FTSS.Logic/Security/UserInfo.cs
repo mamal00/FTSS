@@ -20,8 +20,16 @@ namespace FTSS.Logic.Security
             this.User = new Models.Database.StoredProcedures.SP_Login();
             this.AccessMenu = new List<Models.Database.StoredProcedures.SP_User_GetAccessMenu>();
         }
-
-        public string Username { get; set; }
+		#region properties
+		public string Email { get; set; }
+		public int UserId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime ExpireDate { get; set; }
+		public string Token { get; set; }
+		public string accessMenuJson { get; set; }
+		#endregion
+		public string Username { get; set; }
 
         /// <summary>
         /// User information
@@ -33,57 +41,6 @@ namespace FTSS.Logic.Security
         /// </summary>
         public List<Models.Database.StoredProcedures.SP_User_GetAccessMenu> AccessMenu { get; set; }
 
-        /// <summary>
-        /// Call database stored procedure for username & password validation
-        /// </summary>
-        /// <param name="filterParams"></param>
-        /// <returns></returns>
-        private async Task<DBResult> Login(Models.Database.StoredProcedures.SP_Login_Params filterParams)
-        {
-            var LoginResult =await Logic.Database.StoredProcedure.SP_Login.Call(_ctx, filterParams);
-            if (LoginResult.ErrorCode != 200)
-                return LoginResult;
-
-            //Set user info
-            this.User = LoginResult.Data as Models.Database.StoredProcedures.SP_Login;
-            this.Username = filterParams.Email;
-
-            //Get user access menu
-            var AccessMenuResult =await Logic.Database.StoredProcedure.SP_User_GetAccessMenu.Call(_ctx, this.User);
-            if (AccessMenuResult.ErrorCode != 200)
-                return AccessMenuResult;
-
-            //Set user access menu
-            this.AccessMenu = AccessMenuResult.Data as List<Models.Database.StoredProcedures.SP_User_GetAccessMenu>;
-
-            //Create result
-            var rst = new DBResult(200, "", this);
-            return rst;
-        }
-
-        /// <summary>
-        /// Login and generate JWT token
-        /// </summary>
-        /// <param name="ctx"></param>
-        /// <param name="filterParams"></param>
-        /// <returns></returns>
-        public static async Task<DBResult> Login(Logic.Database.IDBCTX ctx, Models.Database.StoredProcedures.SP_Login_Params filterParams)
-        {
-            //Validation Username & Password by database stored procedure
-            var userInfo = new UserInfo(ctx);
-            var loginResult =await userInfo.Login(filterParams);
-
-            //If login failed, exit
-            if (loginResult.ErrorCode != 200)
-                return loginResult;
-
-            //Generate JWT token
-            var jwt = new JWT();
-            var jwtToken = jwt.GenerateToken(loginResult.Data as UserInfo);
-            
-            //Create result
-            var rst = new DBResult(200, "", jwtToken);
-            return rst;
-        }
+     
     }
 }
