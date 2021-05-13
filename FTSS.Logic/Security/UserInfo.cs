@@ -23,7 +23,8 @@ namespace FTSS.Logic.Security
 		#region properties
 		public string Email { get; set; }
 		public int UserId { get; set; }
-        public string FirstName { get; set; }
+		public string Codemeli { get; set; }
+		public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime ExpireDate { get; set; }
 		public string Token { get; set; }

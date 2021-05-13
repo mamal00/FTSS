@@ -7,24 +7,25 @@ namespace FTSS.Models.Database.StoredProcedures
 	public class SP_Fish_GetAll
 	{
 		public int FishId { get; set; }
-		public int? FishType { get; set; }
-		public DateTime? FishDate { get; set; }
-		public DateTime? IssuanceDate { get; set; }
-		public string AccountNumber { get; set; }
-		public decimal? InsurancePrice { get; set; }
-		public decimal? WritPrice { get; set; }
-		public decimal? ExtraSum { get; set; }
-		public decimal? DeductionSum { get; set; }
-		public decimal? Payment { get; set; }
-		public decimal? TaxPrice { get; set; }
-		public int? AcceptUserId{ get; set; }
-		public string InsuranceBranch { get; set; }
+		public string GhesmatName { get; set; }
+		public string FishType { get; set; }
+		public int? Sal { get; set; }
+		public int? Mah { get; set; }
+		public string HesabNo { get; set; }
 		public string BankName { get; set; }
-		public string BranchName { get; set; }
-		public string AccountName { get; set; }
-		public string InsuranceNumber { get; set; }
+		public string BankShobe { get; set; }
+		public string SodoorDate { get; set; }
+		public Int64? Jam { get; set; }
+		public Int64? JamKosoor { get; set; }
+		public Int64? JamDaryafty { get; set; }
+		public string JamDaryaftyHorof { get; set; }
+		public string Date_ { get; set; }
+		public int? Goroh { get; set; }
+		public int? TedadAele { get; set; }
+		public string Mantaghe { get; set; }
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 		public string Email { get; set; }
+		public string Codemeli { get; set; }
 	}
 }

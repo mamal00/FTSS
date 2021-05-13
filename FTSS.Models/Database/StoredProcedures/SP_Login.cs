@@ -10,6 +10,7 @@ namespace FTSS.Models.Database.StoredProcedures
         public string FirstName { get; set; }
         public string LastName { get; set; }
 		public string Email { get; set; }
+		public string Codemeli { get; set; }
 
 		/// <summary>
 		/// Database token expiration

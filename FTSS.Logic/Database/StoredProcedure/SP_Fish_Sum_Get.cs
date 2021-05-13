@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace FTSS.Logic.Database.StoredProcedure
 {
-	public class SP_Fish_User_GetAll
+	public class SP_Fish_Sum_Get
 	{
         public static async Task<Models.Database.DBResult> Call(IDBCTX ctx,
-Models.Database.StoredProcedures.SP_Fish_GetAll_Params filterParams, string key, string issuer)
+Models.Database.StoredProcedures.SP_Fish_Get_Sum_Params filterParams, string key, string issuer)
         {
             var connectionString = ctx.GetConnectionString();
-            var sp = new FTSS.DP.DapperORM.StoredProcedure.SP_Fish_GetAll(connectionString);
-            filterParams.Token = JWT.GetUserModel(key,issuer).User.Token;
-            filterParams.Codemeli = JWT.GetUserModel(key,issuer).User.Codemeli;
+            var sp = new FTSS.DP.DapperORM.StoredProcedure.SP_Fish_Get_Sum(connectionString);
+            filterParams.Token = JWT.GetUserModel(key, issuer).User.Token;
+            filterParams.Codemeli = JWT.GetUserModel(key, issuer).User.Codemeli;
             var rst = await sp.Call(filterParams);
             return rst;
         }

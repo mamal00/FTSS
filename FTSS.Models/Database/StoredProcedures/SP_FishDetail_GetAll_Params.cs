@@ -6,6 +6,6 @@ namespace FTSS.Models.Database.StoredProcedures
 {
 	public class SP_FishDetail_GetAll_Params: BaseModel
 	{
-		public int? FishId { get; set; }
+		public string FishId { get; set; }
 	}
 }

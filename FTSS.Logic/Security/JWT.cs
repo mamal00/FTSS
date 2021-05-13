@@ -131,6 +131,7 @@ namespace FTSS.Logic.Security
                     model.User.FirstName = getValueFromClaim(validateToken.Claims, "FirstName");
                     model.User.LastName = getValueFromClaim(validateToken.Claims, "LastName");
                     model.User.Token = getValueFromClaim(validateToken.Claims, "Token");
+                    model.User.Codemeli = getValueFromClaim(validateToken.Claims, "Codemeli");
                     var accessMenuJSON = getValueFromClaim(validateToken.Claims, "AccessMenu");
                     if (!string.IsNullOrEmpty(accessMenuJSON) && accessMenuJSON != "null")
                         model.AccessMenu = CommonOperations.JSON.jsonToT<List<Models.Database.StoredProcedures.SP_User_GetAccessMenu>>(accessMenuJSON);
@@ -159,6 +160,7 @@ namespace FTSS.Logic.Security
                     new Claim(ClaimTypes.Name,data.Email),
                     new Claim("FirstName",data.FirstName),
                     new Claim("LastName",data.LastName),
+                    new Claim("Codemeli",data.Codemeli),
                     new Claim("UserId",data.UserId.ToString()),
                     new Claim("Token",data.Token),
                     new Claim("AccessMenu", data.accessMenuJson),
@@ -210,7 +212,8 @@ namespace FTSS.Logic.Security
                 Username = GetClaimsFromContext(user, "UserId"),
                 FirstName= GetClaimsFromContext(user, "FirstName"),
                 LastName = GetClaimsFromContext(user, "LastName"),
-                Token= GetClaimsFromContext(user, "Token"),
+                Codemeli = GetClaimsFromContext(user, "Codemeli"),
+                Token = GetClaimsFromContext(user, "Token"),
                 AccessMenu= !string.IsNullOrEmpty(accessMenuJson) && accessMenuJson != "null"? CommonOperations.JSON.jsonToT<List<Models.Database.StoredProcedures.SP_User_GetAccessMenu>>(accessMenuJson):new List<Models.Database.StoredProcedures.SP_User_GetAccessMenu>(),
             };
             return reponse;
