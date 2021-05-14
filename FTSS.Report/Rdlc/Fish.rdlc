@@ -220,16 +220,53 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
+                  <Width>0.98425in</Width>
+                </TablixColumn>
+                <TablixColumn>
                   <Width>1in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.31824in</Width>
+                  <Width>0.87475in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
                   <Height>0.25in</Height>
                   <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox18">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>باقی مانده</Value>
+                                  <Style>
+                                    <FontFamily>B Nazanin</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox18</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox11">
@@ -271,6 +308,41 @@
                 <TablixRow>
                   <Height>0.25in</Height>
                   <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox19">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Format(Fields!Baghimande.Value,
+"###,###,###"
+)</Value>
+                                  <Style>
+                                    <FontFamily>B Nazanin</FontFamily>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox19</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox12">
@@ -347,6 +419,7 @@
               <TablixMembers>
                 <TablixMember />
                 <TablixMember />
+                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
@@ -370,9 +443,9 @@
               </Filter>
             </Filters>
             <Top>0.76211in</Top>
-            <Left>1.905cm</Left>
+            <Left>1.27cm</Left>
             <Height>0.5in</Height>
-            <Width>2.31824in</Width>
+            <Width>2.859in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -386,7 +459,7 @@
                   <Width>1in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.34949in</Width>
+                  <Width>1.12032in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -533,9 +606,9 @@
               </Filter>
             </Filters>
             <Top>0.76211in</Top>
-            <Left>8.04909cm</Left>
+            <Left>9.00159cm</Left>
             <Height>0.5in</Height>
-            <Width>2.34949in</Width>
+            <Width>2.12032in</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -550,7 +623,7 @@
                   <Width>1.08333in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.33907in</Width>
+                  <Width>0.7743in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -697,9 +770,9 @@
               </Filter>
             </Filters>
             <Top>0.76211in</Top>
-            <Left>14.21965cm</Left>
+            <Left>14.85465cm</Left>
             <Height>0.5in</Height>
-            <Width>2.4224in</Width>
+            <Width>1.85763in</Width>
             <ZIndex>2</ZIndex>
             <Style>
               <Border>
@@ -729,14 +802,14 @@
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox6">
+                        <Textbox Name="Textbox3">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>="قسمت: "+First(Fields!GhesmatName.Value)</Value>
+                                  <Value />
                                   <Style>
                                     <FontFamily>B Nazanin</FontFamily>
                                     <FontWeight>Bold</FontWeight>
@@ -748,7 +821,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox6</rd:DefaultName>
+                          <rd:DefaultName>Textbox3</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>White</Color>
@@ -910,6 +983,9 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
+                  <Width>0.98425in</Width>
+                </TablixColumn>
+                <TablixColumn>
                   <Width>2.01599in</Width>
                 </TablixColumn>
                 <TablixColumn>
@@ -922,6 +998,41 @@
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="Textbox2">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>="تاریخ: " + First(Fields!SodoorDate.Value)</Value>
+                                  <Style>
+                                    <FontFamily>B Nazanin</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox2</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>White</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="Textbox14">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -929,7 +1040,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>="تاریخ صدور: " + First(Fields!SodoorDate.Value)</Value>
+                                  <Value>="عائله: " + First(Fields!TedadAele.Value.ToString())</Value>
                                   <Style>
                                     <FontFamily>B Nazanin</FontFamily>
                                     <FontWeight>Bold</FontWeight>
@@ -964,7 +1075,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>="عائله: " + First(Fields!TedadAele.Value.ToString())</Value>
+                                  <Value>="قسمت: "+First(Fields!GhesmatName.Value)</Value>
                                   <Style>
                                     <FontFamily>B Nazanin</FontFamily>
                                     <FontWeight>Bold</FontWeight>
@@ -998,6 +1109,7 @@
               <TablixMembers>
                 <TablixMember />
                 <TablixMember />
+                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
@@ -1016,9 +1128,9 @@
               </Filter>
             </Filters>
             <Top>0.48872in</Top>
-            <Left>9.41654cm</Left>
+            <Left>6.87654cm</Left>
             <Height>0.25in</Height>
-            <Width>4.31793in</Width>
+            <Width>5.31338in</Width>
             <ZIndex>4</ZIndex>
             <Style>
               <Border>
@@ -1046,16 +1158,14 @@
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox10">
+                        <Textbox Name="Textbox1">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>="جمع کسور: " + Format(First(Fields!JamKosoor.Value),
-"###,###,###"
-)</Value>
+                                  <Value />
                                   <Style>
                                     <FontFamily>B Nazanin</FontFamily>
                                     <FontSize>12pt</FontSize>
@@ -1068,7 +1178,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox5</rd:DefaultName>
+                          <rd:DefaultName>Textbox1</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>White</Color>
@@ -1091,7 +1201,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>="جمع دریافتی: " + Format(First(Fields!JamDaryafty.Value),
+                                  <Value>="جمع کسور: " + Format(First(Fields!JamKosoor.Value),
 "###,###,###"
 )</Value>
                                   <Style>
@@ -1129,7 +1239,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>="جمع: " + Format(First(Fields!Jam.Value),
+                                  <Value>="جمع حقوق و مزایا: " + Format(First(Fields!Jam.Value),
 "###,###,###"
 )</Value>
                                   <Style>
@@ -1216,7 +1326,9 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>="جمع دریافتی به حروف:  " + First(Fields!JamDaryaftyHorof.Value)</Value>
+                                  <Value>="قابل پرداخت : "+ Format(First(Fields!JamDaryafty.Value),
+"###,###,###"
+) +"  "+ First(Fields!JamDaryaftyHorof.Value)</Value>
                                   <Style>
                                     <FontFamily>B Nazanin</FontFamily>
                                     <FontSize>12pt</FontSize>
@@ -1268,7 +1380,7 @@
               </Filter>
             </Filters>
             <Top>1.78642in</Top>
-            <Left>7.8575cm</Left>
+            <Left>8.4925cm</Left>
             <Height>0.25in</Height>
             <Width>4.36241in</Width>
             <ZIndex>6</ZIndex>
