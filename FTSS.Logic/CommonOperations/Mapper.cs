@@ -13,6 +13,7 @@ namespace FTSS.Logic.CommonOperations
 
             //Map Admin to User.
             CreateMap<Models.Database.StoredProcedures.SP_Login, UserInfo>();
+            CreateMap<Models.Database.StoredProcedures.SP_Admin_Login, UserInfo>();
         }
     }
 }

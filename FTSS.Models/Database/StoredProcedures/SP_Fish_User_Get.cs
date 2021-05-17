@@ -6,6 +6,10 @@ namespace FTSS.Models.Database.StoredProcedures
 {
 	public class SP_Fish_User_Get
 	{
+		public SP_Fish_User_Get()
+		{
+			FishDetailList = new List<SP_FishDetailMobile_GetAll>();
+		}
 		public int FishId { get; set; }
 		public string GhesmatName { get; set; }
 		public string FishType { get; set; }
@@ -27,5 +31,6 @@ namespace FTSS.Models.Database.StoredProcedures
 		public string LastName { get; set; }
 		public string Email { get; set; }
 		public string Codemeli { get; set; }
+		public List<SP_FishDetailMobile_GetAll> FishDetailList { get; set; }
 	}
 }

@@ -226,6 +226,43 @@ namespace FTSS.Report
 								lblError.Text = $"خطای {responseFishDetail.StatusCode} در اجرای وب سرویس:{responseFishDetail.ErrorMessage}";
 							break;
 						#endregion
+						#region FishDetail/GetAll=> فیش حقوقی کاربر
+						case "AdminFishDetail/GetAll":
+							rdlcFileName += "Fish.rdlc";
+
+
+							var responseAdminFishDetail = requestWebService(new
+							{
+								fishId = GetString("FishId")
+							});
+							if (responseAdminFishDetail.IsSuccessful)
+							{
+								data = ConvertToObject<List<FishDetailModel>>(ConvertToJson(responseAdminFishDetail.Data.Data));
+								string pdfFileName = string.Format("Fish-{0}.pdf", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-ms"));
+								string pdfPath = exportsRoot + pdfFileName;
+								//حذف فایل های قدیمی
+								Pdf.ClearLastDayFiles(exportsRoot);
+								exportRst = BindRdlc.ExportToPdf(ReportViewer1, data, "DataSet", rdlcFileName, names, values,
+								pdfPath);
+								if (exportRst)
+								{
+									Response.Clear();
+									Response.ContentType = "application/pdf";
+									Response.AddHeader("Content-Disposition",
+										string.Format("attachment;filename=\"{0}\"", pdfFileName));
+
+									var pdfFileArray = System.IO.File.ReadAllBytes(pdfPath);
+									Response.BinaryWrite(pdfFileArray);
+									Response.Flush();
+									ReportViewer1.Visible = false;
+								}
+								else
+									BindRdlc.SetRVDataSource(ReportViewer1, data, "DataSet", rdlcFileName, names, values);
+							}
+							else
+								lblError.Text = $"خطای {responseAdminFishDetail.StatusCode} در اجرای وب سرویس:{responseAdminFishDetail.ErrorMessage}";
+							break;
+						#endregion
 						default:
 							break;
 					}

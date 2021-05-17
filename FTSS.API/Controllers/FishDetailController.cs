@@ -76,5 +76,20 @@ namespace FTSS.API.Controllers
                 return Problem(e.Message, e.StackTrace, 500, "Error in GetSum");
             }
         }
+        [HttpPut]
+        [Filters.Auth]
+        public async Task<IActionResult> Get([FromBody] Models.Database.StoredProcedures.SP_FishDetail_GetAll_Params filterParams)
+        {
+            try
+            {
+                var dbResult = await Logic.Database.StoredProcedure.SP_FishDetail_GetAll.CallMobile(_ctx, filterParams, JWTKey, JWTIssuer);
+                return FromDatabase(dbResult);
+            }
+            catch (Exception e)
+            {
+                _logger.Add(e, "Error in FishDetailController.Get()");
+                return Problem(e.Message, e.StackTrace, 500, "Error in GetSum");
+            }
+        }
     }
 }

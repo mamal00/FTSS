@@ -37,5 +37,25 @@ namespace FTSS.DP.DapperORM.StoredProcedure
 
             return rst;
         }
+        public async Task<DBResult> CallAdmin(Models.Database.StoredProcedures.SP_Admin_Login Data)
+        {
+            if (Data == null || string.IsNullOrEmpty(Data.Token))
+                throw new Exception("SP_User_GetAccessMenu.Call can not be call without passing userInfo");
+
+            string sql = "dbo.SP_User_GetAccessMenu";
+            DBResult rst = null;
+
+            using (var connection = new SqlConnection(_cns))
+            {
+                var p = Common.GetSearchParams(Data.Token);
+
+                var dbResult = await connection.QueryAsync<Models.Database.StoredProcedures.SP_User_GetAccessMenu>(
+                    sql, p, commandType: System.Data.CommandType.StoredProcedure);
+
+                rst = Common.GetResult(p, dbResult);
+            }
+
+            return rst;
+        }
     }
 }

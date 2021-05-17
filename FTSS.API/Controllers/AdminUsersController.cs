@@ -10,8 +10,17 @@ namespace FTSS.API.Controllers
 {
 	[Route("/api/[controller]/[action]")]
 	[ApiController]
-	public class FishController : BaseController
+	public class AdminUsersController : BaseController
 	{
+		/// <summary>
+		/// Access to appsettings.json
+		/// </summary>
+		private readonly AutoMapper.IMapper _mapper;
+		public AdminUsersController(Logic.Database.IDBCTX dbCTX, Logic.Log.ILog logger, IConfiguration configuration, AutoMapper.IMapper mapper)
+			: base(dbCTX, logger, configuration)
+		{
+			_mapper = mapper;
+		}
 		/// <summary>
 		/// Read JWT key from appsettings.json
 		/// </summary>
@@ -32,32 +41,24 @@ namespace FTSS.API.Controllers
 				return (rst);
 			}
 		}
-		public FishController(Logic.Database.IDBCTX dbCTX, Logic.Log.ILog logger, IConfiguration configuration)
-	   : base(dbCTX, logger, configuration)
-		{
-		}
-
-		
 		/// <summary>
-		/// Get Sum Fish
+		/// Login For Admin
 		/// </summary>
 		/// <param name="filterParams"></param>
 		/// <returns></returns>
 		[HttpPut]
-		[Filters.Auth]
-		public async Task<IActionResult> GetSum([FromBody] Models.Database.StoredProcedures.SP_Fish_Get_Sum_Params filterParams)
+		public async Task<IActionResult> Login([FromBody] Models.Database.StoredProcedures.SP_Admin_Login_Params filterParams)
 		{
 			try
 			{
-				var dbResult = await Logic.Database.StoredProcedure.SP_Fish_Sum_Get.Call(_ctx, filterParams, JWTKey, JWTIssuer);
-				return FromDatabase(dbResult);
+				var rst = await Logic.Database.StoredProcedure.SP_Admin_Login.Call(_ctx, _mapper, filterParams, JWTKey, JWTIssuer);
+				return FromDatabase(rst);
 			}
 			catch (Exception e)
 			{
-				_logger.Add(e, "Error in FishController.GetSum()");
-				return Problem(e.Message, e.StackTrace, 500, "Error in GetSum");
+				_logger.Add(e, "Error in AdminUsersController.Login(filterParams)");
+				return Problem(e.Message, e.StackTrace, 500, "Error in Login");
 			}
 		}
-	
 	}
 }

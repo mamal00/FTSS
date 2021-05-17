@@ -61,6 +61,9 @@ namespace FTSS.Login.Pages
 							message = "لطفا نام کاربری و پسورد را وارد نمائید";
 							return Page();
 						default:
+							if (response.Content != null)
+								message = response.Content;
+							else
 							message = response.ErrorMessage;
 							return Page();
 
