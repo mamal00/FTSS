@@ -9,5 +9,7 @@ namespace FTSS.Models.Database.StoredProcedures
 		public string Codemeli { get; set; }
 		public DateTime? FromDate { get; set; }
 		public DateTime? ToDate { get; set; }
+		public string FirstName { get; set; }
+		public string LastName { get; set; }
 	}
 }
