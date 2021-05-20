@@ -28,6 +28,8 @@ namespace FTSS.Logic.Security
         public string LastName { get; set; }
         public DateTime ExpireDate { get; set; }
 		public string Token { get; set; }
+		public string Prs_no { get; set; }
+		public string Mobile { get; set; }
 		public string accessMenuJson { get; set; }
 		#endregion
 		public string Username { get; set; }

@@ -152,7 +152,16 @@ namespace FTSS.Logic.Security
         {
             var symmetricKey = Convert.FromBase64String(keyValue);
             var tokenHandler = new JwtSecurityTokenHandler();
-            
+            string prs_no = "";
+            string mobile = "";
+            if(!string.IsNullOrEmpty(data.Prs_no))
+			{
+                prs_no = data.Prs_no;
+			}
+            if(string.IsNullOrEmpty(data.Mobile))
+			{
+                mobile = data.Mobile;
+			}
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
@@ -163,17 +172,17 @@ namespace FTSS.Logic.Security
                     new Claim("Codemeli",data.Codemeli),
                     new Claim("UserId",data.UserId.ToString()),
                     new Claim("Token",data.Token),
+                    new Claim("PrsNo",prs_no),
+                    new Claim("Mobile",mobile),
                     new Claim("AccessMenu", data.accessMenuJson),
                     new Claim("scope", Guid.NewGuid().ToString()),
                 }),
                 Issuer=issuerValue,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(symmetricKey), SecurityAlgorithms.HmacSha256)
             };
-
             SecurityToken securityToken = tokenHandler.CreateToken(tokenDescriptor);
             var token = tokenHandler.WriteToken(securityToken);
-
-            return new DBResult(200,"", token ,1);
+            return new DBResult(200,"", new { token, data.Prs_no,data.Mobile,data.Codemeli,data.FirstName,data.LastName } ,1);
         }
    
 
