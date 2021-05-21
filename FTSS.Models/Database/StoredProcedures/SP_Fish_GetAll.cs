@@ -27,5 +27,11 @@ namespace FTSS.Models.Database.StoredProcedures
 		public string LastName { get; set; }
 		public string Email { get; set; }
 		public string Codemeli { get; set; }
+		public string Prs_No { get; set; }
+		public string Mobile { get; set; }
+		public int? TedadTakafol { get; set; }
+		public string Tahol { get; set; }
+		public Int64? MozdRoz { get; set; }
+		public Int64? HoghoghMah { get; set; }
 	}
 }

@@ -343,6 +343,18 @@ namespace FTSS.Report {
             
             private global::System.Data.DataColumn columnEmail;
             
+            private global::System.Data.DataColumn columnPrs_No;
+            
+            private global::System.Data.DataColumn columnMobile;
+            
+            private global::System.Data.DataColumn columnTedadTakafol;
+            
+            private global::System.Data.DataColumn columnTahol;
+            
+            private global::System.Data.DataColumn columnMozdRoz;
+            
+            private global::System.Data.DataColumn columnHoghoghMah;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public SP_FishDetail_GetAllDataTable() {
@@ -634,6 +646,54 @@ namespace FTSS.Report {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn Prs_NoColumn {
+                get {
+                    return this.columnPrs_No;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn MobileColumn {
+                get {
+                    return this.columnMobile;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn TedadTakafolColumn {
+                get {
+                    return this.columnTedadTakafol;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn TaholColumn {
+                get {
+                    return this.columnTahol;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn MozdRozColumn {
+                get {
+                    return this.columnMozdRoz;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn HoghoghMahColumn {
+                get {
+                    return this.columnHoghoghMah;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -701,7 +761,13 @@ namespace FTSS.Report {
                         string FirstName, 
                         string LastName, 
                         string FullName, 
-                        string Email) {
+                        string Email, 
+                        string Prs_No, 
+                        string Mobile, 
+                        int TedadTakafol, 
+                        string Tahol, 
+                        long MozdRoz, 
+                        long HoghoghMah) {
                 SP_FishDetail_GetAllRow rowSP_FishDetail_GetAllRow = ((SP_FishDetail_GetAllRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         FishItemId,
@@ -735,7 +801,13 @@ namespace FTSS.Report {
                         FirstName,
                         LastName,
                         FullName,
-                        Email};
+                        Email,
+                        Prs_No,
+                        Mobile,
+                        TedadTakafol,
+                        Tahol,
+                        MozdRoz,
+                        HoghoghMah};
                 rowSP_FishDetail_GetAllRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowSP_FishDetail_GetAllRow);
                 return rowSP_FishDetail_GetAllRow;
@@ -797,6 +869,12 @@ namespace FTSS.Report {
                 this.columnLastName = base.Columns["LastName"];
                 this.columnFullName = base.Columns["FullName"];
                 this.columnEmail = base.Columns["Email"];
+                this.columnPrs_No = base.Columns["Prs_No"];
+                this.columnMobile = base.Columns["Mobile"];
+                this.columnTedadTakafol = base.Columns["TedadTakafol"];
+                this.columnTahol = base.Columns["Tahol"];
+                this.columnMozdRoz = base.Columns["MozdRoz"];
+                this.columnHoghoghMah = base.Columns["HoghoghMah"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -866,6 +944,18 @@ namespace FTSS.Report {
                 base.Columns.Add(this.columnFullName);
                 this.columnEmail = new global::System.Data.DataColumn("Email", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnEmail);
+                this.columnPrs_No = new global::System.Data.DataColumn("Prs_No", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPrs_No);
+                this.columnMobile = new global::System.Data.DataColumn("Mobile", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMobile);
+                this.columnTedadTakafol = new global::System.Data.DataColumn("TedadTakafol", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTedadTakafol);
+                this.columnTahol = new global::System.Data.DataColumn("Tahol", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTahol);
+                this.columnMozdRoz = new global::System.Data.DataColumn("MozdRoz", typeof(long), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMozdRoz);
+                this.columnHoghoghMah = new global::System.Data.DataColumn("HoghoghMah", typeof(long), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnHoghoghMah);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnFishItemId}, true));
                 this.columnFishItemId.AllowDBNull = false;
@@ -898,6 +988,9 @@ namespace FTSS.Report {
                 this.columnFullName.MaxLength = 101;
                 this.columnEmail.AllowDBNull = false;
                 this.columnEmail.MaxLength = 500;
+                this.columnPrs_No.MaxLength = 20;
+                this.columnMobile.MaxLength = 11;
+                this.columnTahol.MaxLength = 10;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1525,6 +1618,102 @@ namespace FTSS.Report {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Prs_No {
+                get {
+                    try {
+                        return ((string)(this[this.tableSP_FishDetail_GetAll.Prs_NoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Prs_No\' in table \'SP_FishDetail_GetAll\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSP_FishDetail_GetAll.Prs_NoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Mobile {
+                get {
+                    try {
+                        return ((string)(this[this.tableSP_FishDetail_GetAll.MobileColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Mobile\' in table \'SP_FishDetail_GetAll\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSP_FishDetail_GetAll.MobileColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int TedadTakafol {
+                get {
+                    try {
+                        return ((int)(this[this.tableSP_FishDetail_GetAll.TedadTakafolColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'TedadTakafol\' in table \'SP_FishDetail_GetAll\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSP_FishDetail_GetAll.TedadTakafolColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Tahol {
+                get {
+                    try {
+                        return ((string)(this[this.tableSP_FishDetail_GetAll.TaholColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Tahol\' in table \'SP_FishDetail_GetAll\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSP_FishDetail_GetAll.TaholColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public long MozdRoz {
+                get {
+                    try {
+                        return ((long)(this[this.tableSP_FishDetail_GetAll.MozdRozColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'MozdRoz\' in table \'SP_FishDetail_GetAll\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSP_FishDetail_GetAll.MozdRozColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public long HoghoghMah {
+                get {
+                    try {
+                        return ((long)(this[this.tableSP_FishDetail_GetAll.HoghoghMahColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'HoghoghMah\' in table \'SP_FishDetail_GetAll\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSP_FishDetail_GetAll.HoghoghMahColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsNoeNull() {
                 return this.IsNull(this.tableSP_FishDetail_GetAll.NoeColumn);
             }
@@ -1834,6 +2023,78 @@ namespace FTSS.Report {
             public void SetFullNameNull() {
                 this[this.tableSP_FishDetail_GetAll.FullNameColumn] = global::System.Convert.DBNull;
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsPrs_NoNull() {
+                return this.IsNull(this.tableSP_FishDetail_GetAll.Prs_NoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetPrs_NoNull() {
+                this[this.tableSP_FishDetail_GetAll.Prs_NoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsMobileNull() {
+                return this.IsNull(this.tableSP_FishDetail_GetAll.MobileColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetMobileNull() {
+                this[this.tableSP_FishDetail_GetAll.MobileColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsTedadTakafolNull() {
+                return this.IsNull(this.tableSP_FishDetail_GetAll.TedadTakafolColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetTedadTakafolNull() {
+                this[this.tableSP_FishDetail_GetAll.TedadTakafolColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsTaholNull() {
+                return this.IsNull(this.tableSP_FishDetail_GetAll.TaholColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetTaholNull() {
+                this[this.tableSP_FishDetail_GetAll.TaholColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsMozdRozNull() {
+                return this.IsNull(this.tableSP_FishDetail_GetAll.MozdRozColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetMozdRozNull() {
+                this[this.tableSP_FishDetail_GetAll.MozdRozColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsHoghoghMahNull() {
+                return this.IsNull(this.tableSP_FishDetail_GetAll.HoghoghMahColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetHoghoghMahNull() {
+                this[this.tableSP_FishDetail_GetAll.HoghoghMahColumn] = global::System.Convert.DBNull;
+            }
         }
         
         /// <summary>
@@ -2027,6 +2288,12 @@ namespace FTSS.Report.DataSetTableAdapters {
             tableMapping.ColumnMappings.Add("LastName", "LastName");
             tableMapping.ColumnMappings.Add("FullName", "FullName");
             tableMapping.ColumnMappings.Add("Email", "Email");
+            tableMapping.ColumnMappings.Add("Prs_No", "Prs_No");
+            tableMapping.ColumnMappings.Add("Mobile", "Mobile");
+            tableMapping.ColumnMappings.Add("TedadTakafol", "TedadTakafol");
+            tableMapping.ColumnMappings.Add("Tahol", "Tahol");
+            tableMapping.ColumnMappings.Add("MozdRoz", "MozdRoz");
+            tableMapping.ColumnMappings.Add("HoghoghMah", "HoghoghMah");
             this._adapter.TableMappings.Add(tableMapping);
         }
         

@@ -57,6 +57,12 @@
               <Mapping SourceColumn="LastName" DataSetColumn="LastName" />
               <Mapping SourceColumn="FullName" DataSetColumn="FullName" />
               <Mapping SourceColumn="Email" DataSetColumn="Email" />
+              <Mapping SourceColumn="Prs_No" DataSetColumn="Prs_No" />
+              <Mapping SourceColumn="Mobile" DataSetColumn="Mobile" />
+              <Mapping SourceColumn="TedadTakafol" DataSetColumn="TedadTakafol" />
+              <Mapping SourceColumn="Tahol" DataSetColumn="Tahol" />
+              <Mapping SourceColumn="MozdRoz" DataSetColumn="MozdRoz" />
+              <Mapping SourceColumn="HoghoghMah" DataSetColumn="HoghoghMah" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -217,6 +223,30 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
+              <xs:element name="Prs_No" msprop:Generator_ColumnVarNameInTable="columnPrs_No" msprop:Generator_ColumnPropNameInRow="Prs_No" msprop:Generator_ColumnPropNameInTable="Prs_NoColumn" msprop:Generator_UserColumnName="Prs_No" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Mobile" msprop:Generator_ColumnVarNameInTable="columnMobile" msprop:Generator_ColumnPropNameInRow="Mobile" msprop:Generator_ColumnPropNameInTable="MobileColumn" msprop:Generator_UserColumnName="Mobile" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="11" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TedadTakafol" msprop:Generator_ColumnVarNameInTable="columnTedadTakafol" msprop:Generator_ColumnPropNameInRow="TedadTakafol" msprop:Generator_ColumnPropNameInTable="TedadTakafolColumn" msprop:Generator_UserColumnName="TedadTakafol" type="xs:int" minOccurs="0" />
+              <xs:element name="Tahol" msprop:Generator_ColumnVarNameInTable="columnTahol" msprop:Generator_ColumnPropNameInRow="Tahol" msprop:Generator_ColumnPropNameInTable="TaholColumn" msprop:Generator_UserColumnName="Tahol" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="MozdRoz" msprop:Generator_ColumnVarNameInTable="columnMozdRoz" msprop:Generator_ColumnPropNameInRow="MozdRoz" msprop:Generator_ColumnPropNameInTable="MozdRozColumn" msprop:Generator_UserColumnName="MozdRoz" type="xs:long" minOccurs="0" />
+              <xs:element name="HoghoghMah" msprop:Generator_ColumnVarNameInTable="columnHoghoghMah" msprop:Generator_ColumnPropNameInRow="HoghoghMah" msprop:Generator_ColumnPropNameInTable="HoghoghMahColumn" msprop:Generator_UserColumnName="HoghoghMah" type="xs:long" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

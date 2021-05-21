@@ -11,5 +11,8 @@ namespace FTSS.Models.Database.Tables
         public string Password { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-    }
+        public string Prs_No { get; set; }
+        public string Mobile { get; set; }
+		public string Codemeli { get; set; }
+	}
 }

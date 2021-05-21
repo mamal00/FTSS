@@ -42,7 +42,7 @@ namespace FTSS.Logic.Security
                 ValidateAudience = false,
                 ValidateIssuerSigningKey = true,
                 ValidIssuer = issuer,
-                IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(key))
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
             };
 
             return rst;
@@ -128,10 +128,9 @@ namespace FTSS.Logic.Security
                     if (UserId != null)
                         model.User.UserId = int.Parse(UserId);
 
-                    model.User.FirstName = getValueFromClaim(validateToken.Claims, "FirstName");
-                    model.User.LastName = getValueFromClaim(validateToken.Claims, "LastName");
                     model.User.Token = getValueFromClaim(validateToken.Claims, "Token");
                     model.User.Codemeli = getValueFromClaim(validateToken.Claims, "Codemeli");
+                    model.User.Mobile = getValueFromClaim(validateToken.Claims, "Mobile");
                     var accessMenuJSON = getValueFromClaim(validateToken.Claims, "AccessMenu");
                     if (!string.IsNullOrEmpty(accessMenuJSON) && accessMenuJSON != "null")
                         model.AccessMenu = CommonOperations.JSON.jsonToT<List<Models.Database.StoredProcedures.SP_User_GetAccessMenu>>(accessMenuJSON);
@@ -150,7 +149,7 @@ namespace FTSS.Logic.Security
         /// <returns>JWT token which is a string</returns>
         public static DBResult GenerateToken(UserInfo data,string keyValue,string issuerValue)
         {
-            var symmetricKey = Convert.FromBase64String(keyValue);
+            var symmetricKey = Encoding.UTF8.GetBytes(keyValue);
             var tokenHandler = new JwtSecurityTokenHandler();
             string prs_no = "";
             string mobile = "";
@@ -158,7 +157,7 @@ namespace FTSS.Logic.Security
 			{
                 prs_no = data.Prs_no;
 			}
-            if(string.IsNullOrEmpty(data.Mobile))
+            if(!string.IsNullOrEmpty(data.Mobile))
 			{
                 mobile = data.Mobile;
 			}
@@ -167,12 +166,9 @@ namespace FTSS.Logic.Security
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim(ClaimTypes.Name,data.Email),
-                    new Claim("FirstName",data.FirstName),
-                    new Claim("LastName",data.LastName),
                     new Claim("Codemeli",data.Codemeli),
                     new Claim("UserId",data.UserId.ToString()),
                     new Claim("Token",data.Token),
-                    new Claim("PrsNo",prs_no),
                     new Claim("Mobile",mobile),
                     new Claim("AccessMenu", data.accessMenuJson),
                     new Claim("scope", Guid.NewGuid().ToString()),
@@ -219,9 +215,8 @@ namespace FTSS.Logic.Security
             var reponse = new UserInfo
             {
                 Username = GetClaimsFromContext(user, "UserId"),
-                FirstName= GetClaimsFromContext(user, "FirstName"),
-                LastName = GetClaimsFromContext(user, "LastName"),
                 Codemeli = GetClaimsFromContext(user, "Codemeli"),
+                Mobile = GetClaimsFromContext(user, "Mobile"),
                 Token = GetClaimsFromContext(user, "Token"),
                 AccessMenu= !string.IsNullOrEmpty(accessMenuJson) && accessMenuJson != "null"? CommonOperations.JSON.jsonToT<List<Models.Database.StoredProcedures.SP_User_GetAccessMenu>>(accessMenuJson):new List<Models.Database.StoredProcedures.SP_User_GetAccessMenu>(),
             };
@@ -236,7 +231,7 @@ namespace FTSS.Logic.Security
             if (jwtToken == null)
                 return null;
 
-            var symmetricKey = Convert.FromBase64String(keyValue);
+            var symmetricKey = Encoding.UTF8.GetBytes(keyValue);
 
             var validationParameters = new TokenValidationParameters()
             {

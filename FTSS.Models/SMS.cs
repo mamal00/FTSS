@@ -6,7 +6,6 @@ namespace FTSS.Models
 {
 	public class SMS
 	{
-		public string Mobile { get; set; }
 		public string Code { get; set; }
 	}
 }

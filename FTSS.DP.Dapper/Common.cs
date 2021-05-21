@@ -113,11 +113,11 @@ namespace FTSS.DP.DapperORM
                             }
                         }
                         if (finded == false)
-                            parameters.Add("@" + propertyInfo.Name, IsDateTime(propertyInfo.GetValue(data)) ? propertyInfo.GetValue(data) : SafeFarsiStr(propertyInfo.GetValue(data)) ?? null);
+                           parameters.Add("@" + propertyInfo.Name, IsDateTime(propertyInfo.GetValue(data)) ? propertyInfo.GetValue(data) : SafeFarsiStr(propertyInfo.GetValue(data)) ?? null);
                     }
                     else
                     {
-                        parameters.Add("@" + propertyInfo.Name, IsDateTime(propertyInfo.GetValue(data)) ? propertyInfo.GetValue(data) : SafeFarsiStr(propertyInfo.GetValue(data)) ?? null);
+                         parameters.Add("@" + propertyInfo.Name, IsDateTime(propertyInfo.GetValue(data)) ? propertyInfo.GetValue(data) : SafeFarsiStr(propertyInfo.GetValue(data)) ?? null);
                     }
                 }
             }

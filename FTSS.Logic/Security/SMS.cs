@@ -10,9 +10,9 @@ namespace FTSS.Logic.Security
 {
 	public class SMS
 	{
-		public static async Task<Models.Database.DBResult> Send(Models.SMS model, IConfiguration configuration)
+		public static async Task<Models.Database.DBResult> Send(Models.SMS model, IConfiguration configuration, string key, string issuer)
 		{
-			var resultMessage = await requestWebService(model.Mobile, model.Code, configuration);
+			var resultMessage = await requestWebService(JWT.GetUserModel(key,issuer).User.Mobile, model.Code, configuration);
 			if(resultMessage.IsSuccessful)
 			{
 				return new Models.Database.DBResult(200,"",new { },0);

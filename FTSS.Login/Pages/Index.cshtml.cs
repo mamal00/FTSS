@@ -53,7 +53,7 @@ namespace FTSS.Login.Pages
 					switch(response.StatusCode)
 					{
 						case System.Net.HttpStatusCode.OK:
-							return Redirect(iConfiguration.GetValue<string>("DashboardUrl") + response.Data.data);
+							return Redirect(iConfiguration.GetValue<string>("DashboardUrl") + response.Data.data.token);
 						case System.Net.HttpStatusCode.NotFound:
 							message = "نام کاربری یا پسورد اشتباه است";
 							return Page();
